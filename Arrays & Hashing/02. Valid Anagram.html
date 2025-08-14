@@ -11,25 +11,22 @@
     <script>
         function isAnagram(s, t) {
 
-            if(s.length !== t.length) return false;
+            if (s.length !== t.length) return false;
 
-            let map = new Map();
+            const counts = new Map();
 
-            for(let i = 0; i < s.length; i++){
-                map.set(s[i], map.get(s[i] || 0) + 1);
-                map.set(t[i], map.get(t[i] || 0) - 1);
+            for (let i = 0; i < s.length; i++) {
+                counts.set(s[i], (counts.get(s[i]) || 0) + 1);
+                counts.set(t[i], (counts.get(t[i]) || 0) - 1);
             }
 
-            for(let [,val] in map){
-                if(val !== 0) return false;
+            for (const [, val] of counts) {
+                if (val !== 0) return false;
             }
-
-            return true
+            return true;
         }
 
-
         s = "racecar", t = "carrace";
-
         console.log(isAnagram(s, t));
     </script>
 </body>
