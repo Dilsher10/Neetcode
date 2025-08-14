@@ -1,13 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <script>
-        
+        function groupAnagrams(strs) {
+
+            const res = {};
+
+            for (let s of strs) {
+                const count = new Array(26).fill(0);
+
+                for (let c of s) {
+                    // That line is basically a "find my letter's position in the alphabet" trick.
+                    const index = c.charCodeAt(0) - 'a'.charCodeAt(0);
+                    count[index] += 1;
+                }
+
+                const key = count.join(',');
+
+                if (!res[key]) {
+                    res[key] = [];
+                }
+
+                res[key].push(s);
+            }
+
+            return Object.values(res);
+        }
+
+
+
+
+        strs = ["act", "pots", "tops", "cat", "stop", "hat"];
+        console.log(groupAnagrams(strs));
     </script>
 </body>
+
 </html>
