@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <script>
-        function encode(strs){
-
+        function encode(strs) {
             let res = '';
-
-            for(const str of strs){
-                res = `${str.length}`
+            for (const str of strs) {
+                res += `${str.length}#${str}`
             }
+            return res;
+        }
 
-            return res
 
+        function decode(str){
+            
         }
 
 
@@ -25,4 +28,5 @@
         console.log("Encoded:", encoded);
     </script>
 </body>
+
 </html>
