@@ -36,7 +36,10 @@
                 let c = s[r];
                 window[c] = (window[c] || 0) + 1;
 
-                // If the current character is in t and we've matched the required frequency
+                // There are two conditions are check:
+                // First is countT[c] this checks that current character of window is presents in countT are not.
+                // Second is window[c] === countT[c] this checks that current character of window is equal of countT character.
+
                 if (countT[c] && window[c] === countT[c]) {
                     have++;
                 }
