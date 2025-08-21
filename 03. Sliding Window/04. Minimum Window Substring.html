@@ -10,44 +10,58 @@
 <body>
     <script>
         function minWindow(s, t) {
-      
+            // If t is an empty string, no window is needed
             if (t === '') return '';
 
-            let countT = {};
-            let window = {};
-            
+            // Create frequency map for characters in t
+            let countT = {};    // stores how many times each character appears in t
+            let window = {};    // stores how many times each character appears in the current window of s
+
             for (let c of t) {
                 countT[c] = (countT[c] || 0) + 1;
             }
 
+            // Initialize the number of characters that match between window and countT
             let have = 0;
-            let need = Object.keys(countT).length;
+            let need = Object.keys(countT).length;  // total unique characters needed from t
+
+            // Result variables: store best window's left/right pointers and length
             let res = [-1, -1];
             let resLen = Infinity;
-            let l = 0;
 
+            let l = 0; // Left pointer of the sliding window
+
+            // Right pointer of the sliding window moves through s
             for (let r = 0; r < s.length; r++) {
                 let c = s[r];
                 window[c] = (window[c] || 0) + 1;
 
+                // If the current character is in t and we've matched the required frequency
                 if (countT[c] && window[c] === countT[c]) {
                     have++;
                 }
 
+                // When all required characters are matched
                 while (have === need) {
+                    // Update result if this window is smaller than previously found windows
                     if (r - l + 1 < resLen) {
                         resLen = r - l + 1;
                         res = [l, r];
                     }
 
+                    // Start shrinking the window from the left
                     window[s[l]]--;
+
+                    // If a required character falls below its required frequency, reduce 'have'
                     if (countT[s[l]] && window[s[l]] < countT[s[l]]) {
                         have--;
                     }
-                    l++;
+
+                    l++; // Move left pointer forward
                 }
             }
 
+            // If no valid window was found, return empty string; otherwise return the substring
             return resLen === Infinity ? '' : s.slice(res[0], res[1] + 1);
         }
 
