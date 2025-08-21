@@ -11,17 +11,17 @@
     <script>
         function isValid(s) {
             const stack = [];
-            const closeToOpen = {
+            const map = {
                 ')': '(',
                 ']': '[',
                 '}': '{',
             };
 
             for (let c of s) {
-                if (closeToOpen[c]) {
+                if (map[c]) {
                     if (
                         stack.length > 0 &&
-                        stack[stack.length - 1] === closeToOpen[c]
+                        stack[stack.length - 1] === map[c]
                     ) {
                         stack.pop();
                     } else {
