@@ -36,10 +36,9 @@
                 let c = s[r];
                 window[c] = (window[c] || 0) + 1;
 
-                // There are two conditions are check:
-                // First is countT[c] this checks that current character of window is presents in countT are not. means Only count characters that present in coutnT.
+                // There is two conditions are checking:
+                // First is countT[c] this checks that current character of window is presents in countT are not. means Only count characters that present in coutnT and Ignore remaining characters.
                 // Second is window[c] === countT[c] this checks that current character of window is equal of countT character.
-
                 if (countT[c] && window[c] === countT[c]) {
                     have++;
                 }
@@ -55,7 +54,9 @@
                     // Start shrinking the window from the left
                     window[s[l]]--;
 
-                    // If a required character falls below its required frequency, reduce 'have'
+                    // There is two conditions are checking:
+                    // First is countT[s[l]] this checks that the current character which i remove from the left side of window is present in countT or not.
+                    // Second is window[s[l]] < countT[s[l]], this checks that if the frequency of current window character is less than the frequancy of countT character then decrease have by -1. 
                     if (countT[s[l]] && window[s[l]] < countT[s[l]]) {
                         have--;
                     }
