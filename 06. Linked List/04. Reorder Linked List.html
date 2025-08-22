@@ -25,13 +25,13 @@
             slow.next = null
 
             // Step 2: Reverse the second half of the list
-            let second = slow.next;         
-            let prev = (slow.next = null); 
-            while (second !== null) {
-                const tmp = second.next;    // store next node
-                second.next = prev;         // reverse the pointer
-                prev = second;              // move prev forward
-                second = tmp;               // move second forward
+            let current = secondHead;         
+            let prev = null; 
+            while (current !== null) {
+                const next = current.next;    // store next node
+                current.next = prev;         // reverse the pointer
+                prev = current;              // move prev forward
+                current = next;               // move second forward
             }
 
             // Step 3: Merge the two halves
