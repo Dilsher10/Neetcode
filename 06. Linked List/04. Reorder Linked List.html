@@ -18,9 +18,15 @@
                 fast = fast.next.next;      // move fast by 2 steps
             }
 
+            // second now points to the start of the second half
+            let secondHead = slow.next;
+            
+            // Detach the two linked list means break the list into two halves
+            slow.next = null
+
             // Step 2: Reverse the second half of the list
-            let second = slow.next;         // second now points to the start of the second half
-            let prev = (slow.next = null);  // break the list into two halves, and initialize prev to null
+            let second = slow.next;         
+            let prev = (slow.next = null); 
             while (second !== null) {
                 const tmp = second.next;    // store next node
                 second.next = prev;         // reverse the pointer
