@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Linked List Cycle Detection</title>
 </head>
+
 <body>
     <script>
-        function hasCycle(head){
+        function hasCycle(head) {
             let fast = head;
             let slow = head;
 
-            while(fast !== null && fast.next !== null){
+            while (fast !== null && fast.next !== null) {
                 fast = fast.next.next;
                 slow = slow.next;
 
-                if(fast === slow) {
+                if (fast === slow) {
                     return true;
                 }
             }
@@ -24,4 +26,5 @@
         }
     </script>
 </body>
+
 </html>
