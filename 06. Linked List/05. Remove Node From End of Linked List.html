@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Node From End of Linked List</title>
+</head>
+
+<body>
+    <script>
+        function removeNthFromEnd(head, n) {
+            // Create a dummy node that points to the head.
+            // This helps handle edge cases like removing the first node.
+            const dummy = new ListNode(0, head);
+
+            // Initialize two pointers: 'left' at dummy and 'right' at head
+            let left = dummy;
+            let right = head;
+
+            // Move the 'right' pointer n steps ahead
+            while (n > 0) {
+                right = right.next;
+                n--;
+            }
+
+            // Move both 'left' and 'right' until 'right' reaches the end
+            // At that point, 'left' will be right before the node to remove
+            while (right !== null) {
+                left = left.next;
+                right = right.next;
+            }
+
+            // Skip the target node
+            left.next = left.next.next;
+
+            // Return the head of the updated list
+            return dummy.next;
+        }
+    </script>
+</body>
+
+</html>
