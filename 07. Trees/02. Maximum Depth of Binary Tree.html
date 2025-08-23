@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maximum Depth of Binary Tree</title>
+</head>
+
+<body>
+    <script>
+        function maxDepth(root) {
+            if (root === null) {
+                return 0;
+            }
+
+            let lh = maxDepth(root.left);
+            let rh = maxDepth(root.right);
+
+            return (1 + Math.max(lh, rh));
+        }
+    </script>
+</body>
+
+</html>
