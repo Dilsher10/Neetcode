@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valid Binary Search Tree</title>
+</head>
+
+<body>
+    <script>
+        class Solution {
+            isValidBST(root) {
+                return this.valid(root, -Infinity, Infinity);
+            }
+
+
+            valid(node, left, right) {
+                if (node === null) {
+                    return true;
+                }
+                if (!(left < node.val && node.val < right)) {
+                    return false;
+                }
+                return (
+                    this.valid(node.left, left, node.val) &&
+                    this.valid(node.right, node.val, right)
+                );
+            }
+        }
+    </script>
+</body>
+
+</html>
