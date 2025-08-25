@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reorder Linked List</title>
+</head>
+
+<body>
+    <script>
+        function reorderList(head) {
+            if(head == null || head.next == null || head.next.next == null){
+                return;
+            }
+            
+            // Step 1: Use two pointers (slow and fast) to find the middle of the list
+            let slow = head;
+            let fast = head.next;
+            while (fast !== null && fast.next !== null) {
+                slow = slow.next;           // move slow by 1 step
+                fast = fast.next.next;      // move fast by 2 steps
+            }
+
+            // second now points to the start of the second half
+            let secondHead = slow.next;
+            
+            // Detach the two linked list means break the list into two halves
+            slow.next = null
+
+            // Step 2: Reverse the second half of the list
+            let current = secondHead;         
+            let prev = null; 
+            while (current !== null) {
+                const next = current.next;    // store next node
+                current.next = prev;         // reverse the pointer
+                prev = current;              // move prev forward
+                current = next;               // move second forward
+            }
+
+            // Step 3: Merge the two halves
+            let first = head;               // pointer for the first half
+            let second = prev;                  // pointer for the reversed second half
+            while (second !== null) {
+                const tmp1 = first.next;    // store next node from first half
+                const tmp2 = second.next;   // store next node from second half
+
+                first.next = second;        // point first node to a node from second half
+                second.next = tmp1;         // point that node to the next node from first half
+
+                first = tmp1;               // move to next node in first half
+                second = tmp2;              // move to next node in second half
+            }
+        }
+    </script>
+</body>
+
+</html>

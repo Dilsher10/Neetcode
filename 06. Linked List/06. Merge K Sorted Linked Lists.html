@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge K Sorted Linked Lists</title>
+</head>
+
+<body>
+    <script>
+        function mergeKLists(lists) {
+            // If the input is null or an empty array, return null (no lists to merge)
+            if (!lists || lists.length === 0) {
+                return null;
+            }
+
+            // Continue merging until only one list remains
+            while (lists.length > 1) {
+                const mergedLists = [];
+
+                // Iterate through the list pairs (i and i+1) and merge them
+                for (let i = 0; i < lists.length; i += 2) {
+                    const l1 = lists[i];
+                    // Get the next list if it exists, otherwise use null
+                    const l2 = i + 1 < lists.length ? lists[i + 1] : null;
+
+                    // Merge the two lists and add the result to the mergedLists array
+                    mergedLists.push(mergeList(l1, l2));
+                }
+
+                // Replace the original lists with the newly merged lists
+                lists = mergedLists;
+            }
+
+            // Return the single fully merged list
+            return lists[0];
+        }
+
+
+
+        function mergeList(l1, l2) {
+            const dummy = new ListNode(0);
+            let curr = dummy;
+
+            while (l1 && l2) {
+                if (l1.val <= l2.val) {
+                    curr.next = l1;
+                    l1 = l1.next;
+                } else {
+                    curr.next = l2;
+                    l2 = l2.next;
+                }
+                curr = curr.next;
+            }
+
+            curr.next = l1 ? l1 : l2;
+            return dummy.next;
+        }
+    </script>
+</body>
+
+</html>
