@@ -9,25 +9,49 @@
 
 <body>
     <script>
-        function combinationSum(candidates, target) {
-            const result = [];
-
-            function backtrack(start, path, targetLeft) {
-                if (targetLeft === 0) {
-                    result.push([...path]);  // make a copy of path
-                    return;
-                }
-                if (targetLeft < 0) return;
-
-                for (let i = start; i < candidates.length; i++) {
-                    path.push(candidates[i]);
-                    backtrack(i, path, targetLeft - candidates[i]);  // not i + 1 since we can reuse
-                    path.pop();  // backtrack
-                }
+        class Solution {
+            /**
+             * Main function to find all unique combinations of numbers from `nums`
+             * that sum up to the given `target`. Each number in `nums` can be used 
+             * unlimited times in a combination.
+             * 
+             * @param {number[]} nums - Array of positive integers (candidates).
+             * @param {number} target - The target sum to achieve.
+             * @returns {number[][]} - A list of all unique combinations.
+             */
+            combinationSum(nums, target) {
+                let ans = [];  // Final list to store all valid combinations
+                let cur = [];  // Temporary list to build current combination
+                this.backtrack(nums, target, ans, cur, 0);  // Start backtracking
+                return ans;
             }
 
-            backtrack(0, [], target);
-            return result;
+            /**
+             * Helper function to perform backtracking to find all valid combinations.
+             * 
+             * @param {number[]} nums - The candidate numbers.
+             * @param {number} target - The remaining sum to achieve.
+             * @param {number[][]} ans - The final list of valid combinations.
+             * @param {number[]} cur - The current combination being built.
+             * @param {number} index - The current index in `nums` being considered.
+             */
+            backtrack(nums, target, ans, cur, index) {
+                if (target === 0) {
+                    // Found a valid combination that adds up to the original target
+                    ans.push([...cur]);  // Add a copy of the current combination to result
+                } else if (target < 0 || index >= nums.length) {
+                    // Invalid path: sum exceeded target or no more candidates to consider
+                    return;
+                } else {
+                    // Include the current number and continue (can reuse same number)
+                    cur.push(nums[index]);
+                    this.backtrack(nums, target - nums[index], ans, cur, index); // Stay on same index
+
+                    // Backtrack: remove the last added number and try the next candidate
+                    cur.pop();
+                    this.backtrack(nums, target, ans, cur, index + 1); // Move to next index
+                }
+            }
         }
 
         console.log(combinationSum([2, 3, 6, 7], 7));
