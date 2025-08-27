@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Combination Sum</title>
 </head>
+
 <body>
     <script>
-        function demo();
+        function combinationSum(candidates, target) {
+            const result = [];
+
+            function backtrack(start, path, targetLeft) {
+                if (targetLeft === 0) {
+                    result.push([...path]);  // make a copy of path
+                    return;
+                }
+                if (targetLeft < 0) return;
+
+                for (let i = start; i < candidates.length; i++) {
+                    path.push(candidates[i]);
+                    backtrack(i, path, targetLeft - candidates[i]);  // not i + 1 since we can reuse
+                    path.pop();  // backtrack
+                }
+            }
+
+            backtrack(0, [], target);
+            return result;
+        }
     </script>
 </body>
+
 </html>
