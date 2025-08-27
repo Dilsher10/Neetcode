@@ -10,15 +10,7 @@
 <body>
     <script>
         class Solution {
-            /**
-             * Main function to find all unique combinations of numbers from `nums`
-             * that sum up to the given `target`. Each number in `nums` can be used 
-             * unlimited times in a combination.
-             * 
-             * @param {number[]} nums - Array of positive integers (candidates).
-             * @param {number} target - The target sum to achieve.
-             * @returns {number[][]} - A list of all unique combinations.
-             */
+
             combinationSum(nums, target) {
                 let ans = [];  // Final list to store all valid combinations
                 let cur = [];  // Temporary list to build current combination
@@ -26,33 +18,35 @@
                 return ans;
             }
 
-            /**
-             * Helper function to perform backtracking to find all valid combinations.
-             * 
-             * @param {number[]} nums - The candidate numbers.
-             * @param {number} target - The remaining sum to achieve.
-             * @param {number[][]} ans - The final list of valid combinations.
-             * @param {number[]} cur - The current combination being built.
-             * @param {number} index - The current index in `nums` being considered.
-             */
-            backtrack(nums, target, ans, cur, index) {
-                if (target === 0) {
-                    // Found a valid combination that adds up to the original target
-                    ans.push([...cur]);  // Add a copy of the current combination to result
-                } else if (target < 0 || index >= nums.length) {
-                    // Invalid path: sum exceeded target or no more candidates to consider
-                    return;
-                } else {
-                    // Include the current number and continue (can reuse same number)
-                    cur.push(nums[index]);
-                    this.backtrack(nums, target - nums[index], ans, cur, index); // Stay on same index
 
-                    // Backtrack: remove the last added number and try the next candidate
+            // This is a backtracking function to find all combinations that sum up to a target
+            backtrack(nums, target, ans, cur, index) {
+
+                // If the target becomes 0, we found a valid combination
+                if (target === 0) {
+                    ans.push([...cur]); // Add a copy of the current combination to the result
+                }
+                // If the target is negative or we've gone through all numbers, stop exploring this path
+                else if (target < 0 || index >= nums.length) {
+                    return;
+                }
+                else {
+                    // Include the current number in the combination
+                    cur.push(nums[index]);
+
+                    // Recursively try the same number again (since we can use the same number multiple times)
+                    this.backtrack(nums, target - nums[index], ans, cur, index);
+
+                    // Backtrack: remove the last added number and try the next number
                     cur.pop();
-                    this.backtrack(nums, target, ans, cur, index + 1); // Move to next index
+
+                    // Move to the next number in the list
+                    this.backtrack(nums, target, ans, cur, index + 1);
                 }
             }
+
         }
+
 
         console.log(combinationSum([2, 3, 6, 7], 7));
     </script>
