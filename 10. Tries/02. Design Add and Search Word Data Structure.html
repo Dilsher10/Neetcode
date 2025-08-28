@@ -15,16 +15,19 @@
                 this.word = false;
             }
         }
+        
 
         class WordDictionary {
             constructor() {
                 this.root = new TrieNode();
             }
 
+
           
             getIndex(c) {
                 return c.charCodeAt(0) - 'a'.charCodeAt(0);
             }
+
 
            
             addWord(word) {
@@ -49,7 +52,7 @@
       
 
 
-            
+
             dfs(word, j, root) {
                 let cur = root;
 
