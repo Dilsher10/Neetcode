@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Search</title>
+</head>
+
+<body>
+    <script>
+        class Solution {
+            exist(board, word) {
+                const ROWS = board.length;         // Number of rows in the board
+                const COLS = board[0].length;      // Number of columns in the board
+                const path = new Set();            // Set to track the visited cells in the current DFS path
+
+                // Depth-First Search (DFS) helper function
+                const dfs = (r, c, i) => {
+                    // Base case: if all characters in the word are matched
+                    if (i === word.length) return true;
+
+                    // Check boundaries, character match, and if cell has already been visited
+                    if (
+                        r < 0 || c < 0 ||           // Out of top/left boundary
+                        r >= ROWS || c >= COLS ||   // Out of bottom/right boundary
+                        board[r][c] !== word[i] ||  // Character does not match
+                        path.has(`${r},${c}`)       // Cell already used in current path
+                    ) {
+                        return false;
+                    }
+
+                    // Mark the cell as visited
+                    path.add(`${r},${c}`);
+
+                    // Explore all 4 directions: down, up, right, left
+                    const res =
+                        dfs(r + 1, c, i + 1) ||     // Down
+                        dfs(r - 1, c, i + 1) ||     // Up
+                        dfs(r, c + 1, i + 1) ||     // Right
+                        dfs(r, c - 1, i + 1);       // Left
+
+                    // Backtrack: unmark the cell as visited
+                    path.delete(`${r},${c}`);
+
+                    return res;
+                };
+
+                // Try to start DFS from every cell in the grid
+                for (let r = 0; r < ROWS; r++) {
+                    for (let c = 0; c < COLS; c++) {
+                        if (dfs(r, c, 0)) return true;  // If DFS finds the word, return true
+                    }
+                }
+
+                return false;  // Word not found in any path
+            }
+        }
+    </script>
+</body>
+
+</html>
