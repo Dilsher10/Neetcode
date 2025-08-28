@@ -82,6 +82,25 @@
 
         }
 
+
+
+
+
+
+
+        // Test the PrefixTree
+        const trie = new PrefixTree();
+
+        trie.insert("apple");
+        console.log(trie.search("apple"));    // true
+        console.log(trie.search("app"));      // false
+        console.log(trie.startsWith("app"));  // true
+
+        trie.insert("app");
+        console.log(trie.search("app"));      // true
+        console.log(trie.startsWith("ap"));   // true
+        console.log(trie.startsWith("banana")); // false
+
     </script>
 </body>
 
