@@ -9,73 +9,96 @@
 
 <body>
     <script>
+        // Trie node class representing each character node
         class TrieNode {
             constructor() {
-                this.children = Array(26).fill(null);
-                this.word = false;
+                this.children = new Map();  // Map to store child nodes (character -> TrieNode)
+                this.word = false;          // Marks whether this node is the end of a valid word
             }
         }
-        
 
+        // WordDictionary using Trie structure
         class WordDictionary {
             constructor() {
-                this.root = new TrieNode();
+                this.root = new TrieNode(); // Root node of the Trie
             }
 
 
-          
-            getIndex(c) {
-                return c.charCodeAt(0) - 'a'.charCodeAt(0);
-            }
 
-
-           
             addWord(word) {
                 let cur = this.root;
+
                 for (const c of word) {
-                    const idx = this.getIndex(c);
-                    if (cur.children[idx] === null) {
-                        cur.children[idx] = new TrieNode();
+                    // If character doesn't exist as a child, create a new TrieNode
+                    if (!cur.children.has(c)) {
+                        cur.children.set(c, new TrieNode());
                     }
-                    cur = cur.children[idx];
+
+                    // Move to the next node
+                    cur = cur.children.get(c);
                 }
+
+                // Mark the end node as a complete word
                 cur.word = true;
             }
 
-   
+
 
 
             search(word) {
-                return this.dfs(word, 0, this.root);
+                return this.dfs(word, 0, this.root);  // Start DFS from index 0 and root node
             }
 
-      
 
 
 
-            dfs(word, j, root) {
-                let cur = root;
+            // Recursive depth-first search to handle '.' wildcards
+            dfs(word, index, node) {
 
-                for (let i = j; i < word.length; i++) {
+                let cur = node;
+
+                for (let i = index; i < word.length; i++) {
                     const c = word[i];
+
+                    // If character is '.', check all possible children
                     if (c === '.') {
-                        for (const child of cur.children) {
-                            if (child !== null && this.dfs(word, i + 1, child)) {
+                        for (const child of cur.children.values()) {
+                            // Recurse for each child; if any path returns true, word exists
+                            if (this.dfs(word, i + 1, child)) {
                                 return true;
                             }
                         }
+                        // No matching paths found for wildcard
                         return false;
-                    } else {
-                        const idx = this.getIndex(c);
-                        if (cur.children[idx] === null) {
-                            return false;
-                        }
-                        cur = cur.children[idx];
                     }
+
+                    // If character doesn't exist in children, word doesn't exist
+                    if (!cur.children.has(c)) {
+                        return false;
+                    }
+
+                    // Move to the next child node
+                    cur = cur.children.get(c);
                 }
+
+                // Return true only if we end on a node that marks the end of a word
                 return cur.word;
             }
         }
+
+
+        const dict = new WordDictionary();
+        dict.addWord("bat");
+        dict.addWord("bad");
+        dict.addWord("pad");
+
+        console.log(dict.search("bat"));   // true
+        console.log(dict.search("b.t"));   // true ('.' matches 'a')
+        console.log(dict.search("ba."));   // true
+        console.log(dict.search("..."));   // true
+        console.log(dict.search("b.."));   // true
+        console.log(dict.search("pa."));   // true
+        console.log(dict.search("cat"));   // false
     </script>
 </body>
 
