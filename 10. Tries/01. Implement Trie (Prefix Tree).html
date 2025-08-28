@@ -9,59 +9,79 @@
 
 <body>
     <script>
+        // TrieNode class represents each node in the Trie
         class TrieNode {
             constructor() {
-                this.children = new Map();
-                this.endOfWord = false;
+                this.children = new Map(); // Stores children nodes (character -> TrieNode)
+                this.endOfWord = false;    // True if the node represents the end of a valid word
             }
         }
 
+
+
+
+        // PrefixTree class implements the Trie data structure
         class PrefixTree {
             constructor() {
-                this.root = new TrieNode();
+                this.root = new TrieNode(); // Root node of the Trie
             }
 
 
 
+            // Inserts a word into the Trie
             insert(word) {
                 let cur = this.root;
                 for (let c of word) {
+                    // If the current character is not in the children, add it
                     if (!cur.children.has(c)) {
                         cur.children.set(c, new TrieNode());
                     }
+                    // Move to the next node
                     cur = cur.children.get(c);
                 }
+                // Mark the end of the word
                 cur.endOfWord = true;
             }
 
 
 
 
+            // Searches for a complete word in the Trie
             search(word) {
                 let cur = this.root;
                 for (let c of word) {
+                    // If the character doesn't exist, the word is not in the Trie
                     if (!cur.children.has(c)) {
                         return false;
                     }
+                    // Move to the next node
                     cur = cur.children.get(c);
                 }
+                // Return true only if it's the end of a complete word
                 return cur.endOfWord;
             }
 
 
 
 
+            // Checks if any word in the Trie starts with the given prefix
             startsWith(prefix) {
                 let cur = this.root;
                 for (let c of prefix) {
+                    // If the character doesn't exist, no word with the prefix exists
                     if (!cur.children.has(c)) {
                         return false;
                     }
+                    // Move to the next node
                     cur = cur.children.get(c);
                 }
+                // All characters of the prefix found
                 return true;
             }
+
+
         }
+
     </script>
 </body>
 
