@@ -17,11 +17,10 @@
                 this.backtrack(nums, target, ans, cur, 0);  // Start backtracking
                 return ans;
             }
-
+            
 
             // This is a backtracking function to find all combinations that sum up to a target
             backtrack(nums, target, ans, cur, index) {
-
                 // If the target becomes 0, we found a valid combination
                 if (target === 0) {
                     ans.push([...cur]); // Add a copy of the current combination to the result
@@ -44,12 +43,11 @@
                     this.backtrack(nums, target, ans, cur, index + 1);
                 }
             }
-
         }
 
 
         const solution = new Solution();
-        console.log(solution.combinationSum([2, 3, 6, 7], 7));
+        console.log(solution.combinationSum([2, 3, 6, 7], 7))
     </script>
 </body>
 
