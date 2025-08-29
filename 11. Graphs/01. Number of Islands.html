@@ -10,14 +10,15 @@
 <body>
     <script>
         class Solution {
-          
+
             numIslands(grid) {
 
+                // Directions for up, down, left, right
                 const directions = [
-                    [1, 0],
-                    [-1, 0],
-                    [0, 1],
-                    [0, -1],
+                    [1, 0],    // down
+                    [-1, 0],   // up
+                    [0, 1],    // right
+                    [0, -1],   // left
                 ];
 
                 const ROWS = grid.length;
@@ -25,17 +26,31 @@
                 let islands = 0;
 
 
-
+                // Breadth-First Search to traverse and mark all land cells in the current island
                 const bfs = (r, c) => {
-                    const q = new Queue();
+
+                    // Initialize a queue for BFS
+                    const q = [];
+
+                    // Start from the given cell
                     q.push([r, c]);
+
+                    // Mark the cell as visited by converting '1' to '0'
                     grid[r][c] = '0';
 
-                    while (!q.isEmpty()) {
-                        const [row, col] = q.pop();
+
+                    // Continue until the queue is empty
+                    while (q.length > 0) {
+
+                        // Dequeue the current cell
+                        const [row, col] = q.shift();
+
+                        // Explore all 4 directions
                         for (const [dr, dc] of directions) {
                             const nr = row + dr,
                                 nc = col + dc;
+
+                            // Check if the new cell is within bounds and is land
                             if (
                                 nr >= 0 &&
                                 nc >= 0 &&
@@ -43,7 +58,9 @@
                                 nc < COLS &&
                                 grid[nr][nc] === '1'
                             ) {
+                                // Enqueue the land cell
                                 q.push([nr, nc]);
+                                // Mark it as visited    
                                 grid[nr][nc] = '0';
                             }
                         }
@@ -51,19 +68,36 @@
                 };
 
 
-
+                // Traverse each cell in the grid
                 for (let r = 0; r < ROWS; r++) {
                     for (let c = 0; c < COLS; c++) {
+                        // Found unvisited land
                         if (grid[r][c] === '1') {
+                            // Visit the entire island using BFS
                             bfs(r, c);
+                            // Increment island count           
                             islands++;
                         }
                     }
                 }
 
+                // Return total number of islands found
                 return islands;
             }
         }
+
+
+
+        const grid = [
+            ["1", "1", "0", "0", "1"],
+            ["1", "1", "0", "0", "1"],
+            ["0", "0", "1", "0", "0"],
+            ["0", "0", "0", "1", "1"]
+        ]
+
+        const solution = new Solution();
+        const result = solution.numIslands(grid);
+        console.log(result);
     </script>
 </body>
 
