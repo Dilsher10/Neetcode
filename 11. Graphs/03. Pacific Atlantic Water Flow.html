@@ -17,7 +17,9 @@
 
                 const dfs = (r, c, visited, prevHeight) => {
 
-                    if (r < 0 || r >= ROWS || c < 0 || c >= COLS || visited[r][c] || heights[r][c] < prevHeight) return;
+                    if (r < 0 || r >= ROWS || c < 0 || c >= COLS || visited[r][c] || heights[r][c] < prevHeight) {
+                        return;
+                    }
 
                     visited[r][c] = true;
 
