@@ -10,44 +10,59 @@
         class Solution {
 
             pacificAtlantic(heights) {
-                let ROWS = heights.length;
-                let COLS = heights[0].length;
-                let pac = Array.from({ length: ROWS }, () => Array(COLS).fill(false));
-                let atl = Array.from({ length: ROWS }, () => Array(COLS).fill(false));
+                const ROWS = heights.length;
+                const COLS = heights[0].length;
 
+                // Use Set to track visited positions as "r,c" strings
+                const pac = new Set();
+                const atl = new Set();
+
+                // DFS function using sets
                 const dfs = (r, c, visited, prevHeight) => {
+                    const key = `${r},${c}`;
 
-                    if (r < 0 || r >= ROWS || c < 0 || c >= COLS || visited[r][c] || heights[r][c] < prevHeight) {
+                    // Boundary and validity checks
+                    if (
+                        r < 0 || r >= ROWS ||
+                        c < 0 || c >= COLS ||
+                        visited.has(key) ||
+                        heights[r][c] < prevHeight
+                    ) {
                         return;
                     }
 
-                    visited[r][c] = true;
+                    // Mark this cell as visited
+                    visited.add(key); 
 
+                    // Explore all directions
                     dfs(r + 1, c, visited, heights[r][c]);
-                    dfs(r, c + 1, visited, heights[r][c]);
                     dfs(r - 1, c, visited, heights[r][c]);
+                    dfs(r, c + 1, visited, heights[r][c]);
                     dfs(r, c - 1, visited, heights[r][c]);
                 };
 
+                // Start DFS from Pacific Ocean borders
                 for (let c = 0; c < COLS; c++) {
-                    dfs(0, c, pac);
-                    dfs(ROWS - 1, c, atl);
-                }
-                
-                for (let r = 0; r < ROWS; r++) {
-                    dfs(r, 0, pac);
-                    dfs(r, COLS - 1, atl);
+                    dfs(0, c, pac, heights[0][c]);             // Top row
+                    dfs(ROWS - 1, c, atl, heights[ROWS - 1][c]); // Bottom row
                 }
 
-                let res = [];
-                
+                for (let r = 0; r < ROWS; r++) {
+                    dfs(r, 0, pac, heights[r][0]);             // Left column
+                    dfs(r, COLS - 1, atl, heights[r][COLS - 1]); // Right column
+                }
+
+                // Build result from overlapping visited cells
+                const res = [];
                 for (let r = 0; r < ROWS; r++) {
                     for (let c = 0; c < COLS; c++) {
-                        if (pac[r][c] && atl[r][c]) {
+                        const key = `${r},${c}`;
+                        if (pac.has(key) && atl.has(key)) {
                             res.push([r, c]);
                         }
                     }
                 }
+
                 return res;
             }
         }
