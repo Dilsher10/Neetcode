@@ -10,62 +10,76 @@
 <body>
     <script>
         class Solution {
-          
-            canFinish(numCourses, prerequisites) {
 
+            canFinish(numCourses, prerequisites) {
+                // Create a map to store course -> list of prerequisites
                 const preMap = new Map();
 
+                // Initialize the map with empty arrays for each course
                 for (let i = 0; i < numCourses; i++) {
                     preMap.set(i, []);
                 }
 
+                // Populate the map with actual prerequisites from input
                 for (let [crs, pre] of prerequisites) {
                     preMap.get(crs).push(pre);
                 }
 
-                
-                
+                // Set to keep track of courses in the current DFS path (used to detect cycles)
                 const visiting = new Set();
 
+                // Helper function to perform DFS
                 const dfs = (crs) => {
-
+                    // If we're revisiting a course in the current path, there's a cycle
                     if (visiting.has(crs)) {
                         return false;
                     }
 
+                    // If no prerequisites left for this course, it’s already visited and valid
                     if (preMap.get(crs).length === 0) {
                         return true;
                     }
 
+                    // Mark the current course as being visited in this path
                     visiting.add(crs);
 
+                    // Recursively visit all prerequisites
                     for (let pre of preMap.get(crs)) {
                         if (!dfs(pre)) {
+                            // Cycle detected in the path
                             return false;
                         }
                     }
 
+                    // After visiting all prerequisites, remove from visiting
                     visiting.delete(crs);
 
+                    // Mark the course as completed by emptying its prerequisites list
                     preMap.set(crs, []);
 
+                    // No cycle found for this course
                     return true;
                 };
 
+                // Try to run DFS for all courses
                 for (let c = 0; c < numCourses; c++) {
                     if (!dfs(c)) {
+                        // If any course has a cycle, return false
                         return false;
                     }
                 }
+
+                // All courses can be finished
                 return true;
             }
+
         }
 
-        numCourses = 2, prerequisites = [[0,1]];
+        numCourses = 2, prerequisites = [[0, 1]];
         const solution = new Solution();
         const result = solution.canFinish(numCourses, prerequisites);
         console.log(result);
-        
+
     </script>
 </body>
 
