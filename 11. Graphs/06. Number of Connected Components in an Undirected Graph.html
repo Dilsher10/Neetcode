@@ -1,11 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Number of Connected Components in an Undirected Graph</title>
 </head>
+
 <body>
-    
+    <script>
+        // class Solution {
+        //     countComponents(graph) {
+        //         const visited = new Set();
+        //         let count = 0;
+
+        //         const dfs = (graph, node, visited) => {
+
+        //             if (visited.has(node)) {
+        //                 return false;
+        //             }
+
+        //             visited.add(node);
+
+        //             for (let neighbor of graph[node]) {
+        //                 dfs(graph, neighbor, visited);
+        //             }
+
+        //             return true;
+        //         }
+
+        //         for (let node of graph) {
+        //             if (dfs(graph, node, visited) === true) {
+        //                 count++;
+        //             }
+        //         }
+
+        //         return count;
+        //     }
+        // }
+
+
+
+
+
+
+        class Solution {
+            countComponents(n, edges) {
+                // Step 1: Build adjacency list
+                const graph = Array.from({length: n}, () => []);
+
+                for (let [u, v] of edges) {
+                    graph[u].push(v);
+                    graph[v].push(u);
+                }
+
+                const visited = new Set();
+                let count = 0;
+
+                const dfs = (node) => {
+
+                    if (visited.has(node)) return;
+
+                    visited.add(node);
+
+                    for (let neighbor of graph[node]) {
+                        dfs(neighbor);
+                    }   
+                };
+
+                // Step 2: Traverse all nodes
+                for (let i = 0; i < n; i++) {
+                    if (!visited.has(i)) {
+                        dfs(i);
+                        count++;
+                    }
+                }
+
+                return count;
+            }
+        }
+
+
+        n = 3; edges = [[0, 1], [0, 2]];
+        const solution = new Solution();
+        const result = solution.countComponents(n, edges);
+        console.log(result);
+    </script>
 </body>
+
 </html>
