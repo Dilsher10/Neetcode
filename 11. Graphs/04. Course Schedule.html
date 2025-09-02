@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Schedulee</title>
+    <title>Course Schedule</title>
 </head>
 
 <body>
@@ -75,7 +75,7 @@
 
         }
 
-        numCourses = 2, prerequisites = [[0, 1]];
+        numCourses = 2, prerequisites = [[0,1],[1,0]];
         const solution = new Solution();
         const result = solution.canFinish(numCourses, prerequisites);
         console.log(result);
