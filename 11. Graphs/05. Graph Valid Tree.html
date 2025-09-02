@@ -16,38 +16,54 @@
                     return false;
                 }
 
+                // Initialize adjacency list to represent the undirected graph
                 const graph = new Map();
 
-                // Initialize adjacency list
+                // Initialize each node with an empty neighbor list
                 for (let i = 0; i < n; i++) {
                     graph.set(i, []);
                 }
 
-                // Add edges (undirected)
+
+                // Build the undirected graph by adding both directions for each edge
                 for (const [u, v] of edges) {
                     graph.get(u).push(v);
                     graph.get(v).push(u);
                 }
 
+                // Set to keep track of visited nodes during DFS
                 const visited = new Set();
 
+
+                // DFS function to check for cycles and traverse all connected nodes
                 const dfs = (node, parent) => {
+                    // If node is already visited, we have found a cycle
                     if (visited.has(node)) {
                         return false; // Cycle detected
                     }
 
+
+                    // Mark node as visited
                     visited.add(node);
 
+
+                    // Visit all neighbors
                     for (const neighbor of graph.get(node)) {
+                        // Skip the node we came from (the parent)
                         if (neighbor === parent) continue;
+
+                        // If recursive DFS returns false, a cycle is detected
                         if (!dfs(neighbor, node)) {
                             return false;
                         }
                     }
 
+                    // No cycles found from this node
                     return true;
                 };
 
+                // Start DFS from node 0 with no parent (-1)
+                // Must return true (no cycle) and all nodes must be visited (fully connected)
                 return dfs(0, -1) && visited.size === n;
             }
         }
