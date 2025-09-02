@@ -1,13 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Graph Valid Tree</title>
 </head>
+
 <body>
     <script>
-        
+        class Solution {
+            validTree(n, edges) {
+                // Tree must have exactly n - 1 edges
+                if (edges.length !== n - 1) {
+                    return false;
+                }
+
+                const graph = new Map();
+
+                // Initialize adjacency list
+                for (let i = 0; i < n; i++) {
+                    graph.set(i, []);
+                }
+
+                // Add edges (undirected)
+                for (const [u, v] of edges) {
+                    graph.get(u).push(v);
+                    graph.get(v).push(u);
+                }
+
+                const visited = new Set();
+
+                const dfs = (node, parent) => {
+                    if (visited.has(node)) {
+                        return false; // Cycle detected
+                    }
+
+                    visited.add(node);
+
+                    for (const neighbor of graph.get(node)) {
+                        if (neighbor === parent) continue;
+                        if (!dfs(neighbor, node)) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                };
+
+                return dfs(0, -1) && visited.size === n;
+            }
+        }
+
+
+        const n = 5;
+        const edges = [[0, 1], [0, 2], [0, 3], [1, 4]];
+        const solution = new Solution();
+        const result = solution.validTree(n, edges);
+        console.log(result);
     </script>
 </body>
+
 </html>
