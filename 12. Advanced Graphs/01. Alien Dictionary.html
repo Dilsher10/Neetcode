@@ -55,8 +55,8 @@
 
                     visited[char] = true; // Mark as visiting
 
-                    for (const neighChar of adj[char]) {
-                        if (dfs(neighChar)) return true; // Cycle found
+                    for (const neighbor of adj[char]) {
+                        if (dfs(neighbor)) return true; // Cycle found
                     }
 
                     visited[char] = false; // Mark as visited
