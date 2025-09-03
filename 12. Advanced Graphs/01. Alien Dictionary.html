@@ -10,9 +10,9 @@
 <body>
     <script>
         class Solution {
-     
             foreignDictionary(words) {
                 const adj = {};
+
                 for (const word of words) {
                     for (const char of word) {
                         adj[char] = new Set();
@@ -23,12 +23,14 @@
                     const w1 = words[i];
                     const w2 = words[i + 1];
                     const minLen = Math.min(w1.length, w2.length);
+
                     if (
                         w1.length > w2.length &&
                         w1.slice(0, minLen) === w2.slice(0, minLen)
                     ) {
                         return '';
                     }
+
                     for (let j = 0; j < minLen; j++) {
                         if (w1[j] !== w2[j]) {
                             adj[w1[j]].add(w2[j]);
