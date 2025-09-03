@@ -11,58 +11,72 @@
     <script>
         class Solution {
             foreignDictionary(words) {
+                // Step 1: Initialize adjacency list for each character
                 const adj = {};
 
+                // Ensure every character appears in the adjacency list
                 for (const word of words) {
                     for (const char of word) {
                         adj[char] = new Set();
                     }
                 }
 
+                // Step 2: Build the graph by comparing adjacent words
                 for (let i = 0; i < words.length - 1; i++) {
                     const w1 = words[i];
                     const w2 = words[i + 1];
                     const minLen = Math.min(w1.length, w2.length);
 
+                    // Edge case: check for invalid order like ["abc", "ab"]
                     if (
                         w1.length > w2.length &&
                         w1.slice(0, minLen) === w2.slice(0, minLen)
                     ) {
-                        return '';
+                        return ''; // Invalid dictionary order
                     }
 
+                    // Compare characters to find the first difference
                     for (let j = 0; j < minLen; j++) {
                         if (w1[j] !== w2[j]) {
+                            // Add a directed edge w1[j] -> w2[j]
                             adj[w1[j]].add(w2[j]);
-                            break;
+                            break; // Only the first different character matters
                         }
                     }
                 }
 
-                const visited = {};
-                const res = [];
+                // Step 3: Topological Sort using DFS
+                const visited = {}; // Track visiting state: true = visiting, false = visited
+                const res = [];     // Result stack
 
                 const dfs = (char) => {
+                    // Cycle detected
                     if (char in visited) return visited[char];
-                    visited[char] = true;
+
+                    visited[char] = true; // Mark as visiting
 
                     for (const neighChar of adj[char]) {
-                        if (dfs(neighChar)) return true;
+                        if (dfs(neighChar)) return true; // Cycle found
                     }
 
-                    visited[char] = false;
-                    res.push(char);
-                    return false;
+                    visited[char] = false; // Mark as visited
+                    res.push(char);        // Append to result
+                    return false;          // No cycle
                 };
 
+                // Perform DFS for all characters
                 for (const char in adj) {
-                    if (dfs(char)) return '';
+                    if (dfs(char)) return ''; // If cycle detected, return empty string
                 }
 
+                // Reverse result to get correct topological order
                 res.reverse();
                 return res.join('');
             }
         }
+
+        const sol = new Solution();
+        console.log(sol.foreignDictionary(["wrt", "wrf", "er", "ett", "rftt"])); // Output: "wertf"
     </script>
 </body>
 
