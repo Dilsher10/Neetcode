@@ -6,6 +6,26 @@
     <title>Maximum Subarray</title>
 </head>
 <body>
-    
+    <script>
+        function maxSubarray(nums){
+            let maxSum = nums[0];
+            let curSum = 0;
+
+            for(const num of nums){
+
+                if(curSum < 0){
+                    curSum = 0;
+                }
+
+                curSum += num;
+                maxSum = Math.max(maxSum, curSum)
+            }
+
+            return maxSum;
+        }
+
+        nums = [2,-3,4,-2,2,1,-1,4];
+        console.log(maxSubarray(nums));
+    </script>
 </body>
 </html>
