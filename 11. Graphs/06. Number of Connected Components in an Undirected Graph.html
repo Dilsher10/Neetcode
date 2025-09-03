@@ -9,41 +9,6 @@
 
 <body>
     <script>
-        // class Solution {
-        //     countComponents(graph) {
-        //         const visited = new Set();
-        //         let count = 0;
-
-        //         const dfs = (graph, node, visited) => {
-
-        //             if (visited.has(node)) {
-        //                 return false;
-        //             }
-
-        //             visited.add(node);
-
-        //             for (let neighbor of graph[node]) {
-        //                 dfs(graph, neighbor, visited);
-        //             }
-
-        //             return true;
-        //         }
-
-        //         for (let node of graph) {
-        //             if (dfs(graph, node, visited) === true) {
-        //                 count++;
-        //             }
-        //         }
-
-        //         return count;
-        //     }
-        // }
-
-
-
-
-
-
         class Solution {
             countComponents(n, edges) {
                 // Step 1: Build adjacency list
@@ -55,6 +20,7 @@
                 }
 
                 const visited = new Set();
+                
                 let count = 0;
 
                 const dfs = (node) => {
