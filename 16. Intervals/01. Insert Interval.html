@@ -9,57 +9,28 @@
 
 <body>
     <script>
-        // function demo(intervals, newInterval) {
+        function demo(intervals, newInterval) {
 
 
-        //     let res = [];
-        //     let min = []
+            let res = [];
 
-        //     for (let i = 0; i < intervals.length; i++) {
-        //         if (intervals[i][1] > newInterval[0]) {
-        //             min = Math.min(intervals[i][0], newInterval[0]);
-        //             res.push([min, newInterval[1]]);
-        //         }
-        //     }
-
-        //     return res;
-        // }
-
-
-
-        function insertIntervals(intervals, newInterval) {
-      
-            const res = []; 
-
-            for (const interval of intervals) {
-                // Case 1: Current interval ends before the new interval starts (no overlap)
-                if (newInterval === null || interval[1] < newInterval[0]) {
-                    res.push(interval); 
+            for(const interval of intervals){
+                if(interval[1] < newInterval[0]){
+                    res.push(interval);
                 }
-
-                // Case 2: Current interval starts after the new interval ends (no overlap)
-                else if (interval[0] > newInterval[1]) {
-                    res.push(newInterval); 
-                    res.push(interval);    
-                    newInterval = null;  
-                }
-
-                // Case 3: Overlapping intervals (merge them)
-                else {
-                    newInterval[0] = Math.min(interval[0], newInterval[0]); 
-                    newInterval[1] = Math.max(interval[1], newInterval[1]); 
+                else if(interval[0] > newInterval[1]){
+                    res.push(newInterval);
+                    res.push(interval);
+                    newInterval = null;
                 }
             }
-
-            if (newInterval !== null) res.push(newInterval);
 
             return res;
         }
 
 
-
         intervals = [[1, 2], [3, 5], [9, 10]], newInterval = [6, 7]
-        console.log(insertIntervals(intervals, newInterval));
+        console.log(demo(intervals, newInterval));
     </script>
 </body>
 
