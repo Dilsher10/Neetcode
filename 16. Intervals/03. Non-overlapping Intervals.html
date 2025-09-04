@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Non-overlapping Intervals</title>
+</head>
+
+<body>
+    <script>
+        function nonOverlappingIntervals(intervals) {
+            intervals.sort((a, b) => a[1] - b[1]);
+
+            let count = 0;
+            let prev = intervals[0][1];
+
+            for (let i = 1; i < intervals.length; i++) {
+                let start = intervals[i][0]
+                let end = intervals[i][1];
+
+                if (start < prev) {
+                    count++;
+                }
+                else {
+                    prev = end;
+                }
+            }
+
+            return count;
+        }
+
+        intervals = [[1, 2], [2, 4], [1, 4]];
+        console.log((nonOverlappingIntervals(intervals)));
+    </script>
+</body>
+
+</html>
