@@ -29,7 +29,6 @@
 
         function insertIntervals(intervals, newInterval) {
       
-            // Result array to store the merged intervals
             const res = []; 
 
             for (const interval of intervals) {
@@ -51,10 +50,9 @@
                 }
             }
 
-            // If newInterval hasn’t been added yet (e.g., it's the last interval)
             if (newInterval !== null) res.push(newInterval);
 
-            return res; // Return the merged list of intervals
+            return res;
         }
 
 
