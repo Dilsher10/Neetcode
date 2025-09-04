@@ -28,27 +28,37 @@
 
 
         function insertIntervals(intervals, newInterval) {
-            const res = [];
+            // Result array to store the merged intervals
+            const res = []; 
 
             for (const interval of intervals) {
+                // Case 1: Current interval ends before the new interval starts (no overlap)
                 if (newInterval === null || interval[1] < newInterval[0]) {
-                    res.push(interval);
-                } else if (interval[0] > newInterval[1]) {
-                    res.push(newInterval);
-                    res.push(interval);
-                    newInterval = null;
-                } else {
-                    newInterval[0] = Math.min(interval[0], newInterval[0]);
-                    newInterval[1] = Math.max(interval[1], newInterval[1]);
+                    res.push(interval); // Just add the current interval to the result
+                }
+                // Case 2: Current interval starts after the new interval ends (no overlap)
+                else if (interval[0] > newInterval[1]) {
+                    res.push(newInterval); // Add the new interval before the current one
+                    res.push(interval);    // Add the current interval
+                    newInterval = null;    // Mark newInterval as added (null so it won't be added again)
+                }
+                // Case 3: Overlapping intervals (merge them)
+                else {
+                    // Update newInterval to be the merged interval
+                    newInterval[0] = Math.min(interval[0], newInterval[0]); // Earliest start
+                    newInterval[1] = Math.max(interval[1], newInterval[1]); // Latest end
                 }
             }
 
+            // If newInterval hasn’t been added yet (e.g., it's the last interval)
             if (newInterval !== null) res.push(newInterval);
-            return res;
+
+            return res; // Return the merged list of intervals
         }
 
 
-        intervals = [[1,2],[3,5],[9,10]], newInterval = [6,7]
+
+        intervals = [[1, 2], [3, 5], [9, 10]], newInterval = [6, 7]
         console.log(insertIntervals(intervals, newInterval));
     </script>
 </body>
