@@ -36,17 +36,18 @@
                 if (newInterval === null || interval[1] < newInterval[0]) {
                     res.push(interval); // Just add the current interval to the result
                 }
+
                 // Case 2: Current interval starts after the new interval ends (no overlap)
                 else if (interval[0] > newInterval[1]) {
-                    res.push(newInterval); // Add the new interval before the current one
-                    res.push(interval);    // Add the current interval
-                    newInterval = null;    // Mark newInterval as added (null so it won't be added again)
+                    res.push(newInterval); 
+                    res.push(interval);    
+                    newInterval = null;  
                 }
+                
                 // Case 3: Overlapping intervals (merge them)
                 else {
-                    // Update newInterval to be the merged interval
-                    newInterval[0] = Math.min(interval[0], newInterval[0]); // Earliest start
-                    newInterval[1] = Math.max(interval[1], newInterval[1]); // Latest end
+                    newInterval[0] = Math.min(interval[0], newInterval[0]); 
+                    newInterval[1] = Math.max(interval[1], newInterval[1]); 
                 }
             }
 
