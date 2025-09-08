@@ -10,48 +10,52 @@
 <body>
     <script>
         function spiralMatrix(matrix) {
-            const res = [];
-            let left = 0;
-            let right = matrix[0].length;
             let top = 0;
-            let bottom = matrix.length;
+            let right = matrix[0].length - 1;
+            let bottom = matrix.length - 1;
+            let left = 0;
 
-            while (left < right && top < bottom) {
+            let res = [];
 
-                // Traverse from Left to Right
-                for (let i = left; i < right; i++) {
+            while (left <= right && top <= bottom) {
+
+                // Top
+                for (let i = left; i <= right; i++) {
                     res.push(matrix[top][i]);
                 }
-                top++;
 
-                // Traverse from Top to Bottom
-                for (let i = top; i < bottom; i++) {
-                    res.push(matrix[i][right - 1]);
-                }
-                right--;
-
-                // Make sure we are still within bounds
-                if (!(left < right && top < bottom)) {
-                    break;
+                // Right
+                for (let i = top + 1; i <= bottom; i++) {
+                    res.push(matrix[i][right])
                 }
 
-                // Traverse from Right to Left
+
+                // Bottom
                 for (let i = right - 1; i >= left; i--) {
-                    res.push(matrix[bottom - 1][i]);
+                    if (top == bottom) {
+                        break;
+                    }
+                    res.push(matrix[bottom][i]);
                 }
-                bottom--;
 
-                // Traverse from Bottom to Top
-                for (let i = bottom - 1; i >= top; i--) {
+                // Left
+                for (let i = bottom - 1; i >= top + 1; i--) {
+                    if (left == right) {
+                        break
+                    }
                     res.push(matrix[i][left]);
                 }
+
+                top++;
+                right--;
+                bottom--;
                 left++;
             }
 
             return res;
         }
 
-        matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        matrix = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]
         const result = spiralMatrix(matrix)
         console.log(result);
     </script>
