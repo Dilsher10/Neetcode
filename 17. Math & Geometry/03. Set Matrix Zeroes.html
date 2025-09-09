@@ -10,7 +10,7 @@
 <body>
     <script>
         function setZeroes(matrix) {
-            
+
             const m = matrix.length;
             const n = matrix[0].length;
 
@@ -65,8 +65,18 @@
                     matrix[i][0] = 0;
                 }
             }
+
+            return matrix;
         };
 
+        matrix = [
+            [1, 2, 3],
+            [0, 1, 5],
+            [6, 7, 8]
+        ];
+
+        const result = setZeroes(matrix);
+        console.log(result); 
     </script>
 </body>
 
