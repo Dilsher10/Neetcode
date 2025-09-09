@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counting Bits</title>
+</head>
+
+<body>
+    <script>
+        function countBits(n) {
+
+            let res = [];
+
+            for (let i = 0; i <= n; i++) {
+                let count = 0;
+                let num = i;
+
+                while (num !== 0) {
+                    count += num % 2;
+                    num = num >> 1;
+                }
+
+                res.push(count);
+            }
+
+            return res;
+        }
+
+        let n = 5;
+        console.log(countBits(n));
+    </script>
+</body>
+
+</html>
