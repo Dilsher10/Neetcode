@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse Bits</title>
+</head>
+
+<body>
+    <script>
+        function reverseBits(n) {
+            let res = 0;
+
+            for (let i = 0; i < 32; i++) {
+                const lastBit = n & 1;
+                const reverseLastBit = lastBit << (31 - i);
+                res = res | reverseLastBit;
+                n = n >> 1;
+            }
+
+            return res >>> 0;
+        }
+        n = 0b0000000000000000000000000010101;
+        console.log(reverseBits(n)); // 2818572288
+    </script>
+</body>
+
+</html>

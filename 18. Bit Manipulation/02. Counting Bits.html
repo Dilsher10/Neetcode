@@ -1,15 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Counting Bits</title>
 </head>
-
 <body>
     <script>
+        // Optimal
         function countBits(n) {
+<<<<<<< HEAD
+=======
+            // Create a dp array of size (n + 1) and initialize all values to 0.
+            // dp[i] will store the number of 1's in the binary representation of i.
+            const dp = new Array(n + 1).fill(0);
+
+            // Offset keeps track of the most recent power of two (1, 2, 4, 8, ...).
+            // It's used to calculate the number of 1's based on a previous result.
+            let offset = 1;
+
+            // Start from 1 to n (since dp[0] is already 0).
+            for (let i = 1; i <= n; i++) {
+
+                // If i is a power of two (i.e., offset * 2 === i), update offset.
+                // For example: offset = 1 when i = 2, offset = 2 when i = 4, etc.
+                if (offset * 2 === i) {
+                    offset = i;
+                }
+
+                // Use the formula:
+                // dp[i] = 1 + dp[i - offset]
+                // Explanation:
+                // - i - offset is the number we already know the count of 1's for.
+                // - Adding offset (a power of two) adds exactly one '1' bit to the binary.
+                dp[i] = 1 + dp[i - offset];
+            }
+
+            // Return the filled dp array containing bit counts from 0 to n.
+            return dp;
+        }
+
+        n = 4;
+        console.log(countBits(n));
+
+
+
+        // Better
+        function countBits(n) {
+>>>>>>> 8a927df25c131266fd7107c3b0a175d1a5df0247
             let res = [];
 
             for (let i = 0; i <= n; i++) {
@@ -20,15 +58,10 @@
                     count += num % 2;
                     num = num >> 1;
                 }
-
                 res.push(count);
             }
-
             return res;
         }
-
-        let n = 5;
-        console.log(countBits(n));
     </script>
 </body>
 
