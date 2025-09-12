@@ -10,6 +10,7 @@
 <body>
     <script>
         function reorderList(head) {
+            
             if(head == null || head.next == null || head.next.next == null){
                 return;
             }
@@ -18,8 +19,8 @@
             let slow = head;
             let fast = head.next;
             while (fast !== null && fast.next !== null) {
-                slow = slow.next;           // move slow by 1 step
-                fast = fast.next.next;      // move fast by 2 steps
+                slow = slow.next;           
+                fast = fast.next.next;    
             }
 
             // second now points to the start of the second half
@@ -32,10 +33,10 @@
             let current = secondHead;         
             let prev = null; 
             while (current !== null) {
-                const next = current.next;    // store next node
-                current.next = prev;         // reverse the pointer
-                prev = current;              // move prev forward
-                current = next;               // move second forward
+                const next = current.next;    
+                current.next = prev;         
+                prev = current;              
+                current = next;               
             }
 
             // Step 3: Merge the two halves
