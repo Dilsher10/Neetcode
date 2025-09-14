@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Search II</title>
 </head>
-
 <body>
     <script>
-        // Method: 1
         class TrieNode {
             constructor() {
                 this.children = new Map();
@@ -17,13 +14,12 @@
             }
         }
 
-        function findWords(board, words) {
+        var findWords = function (board, words) {
             const root = new TrieNode();
 
-            // Add a word to the Trie
             const addWord = (word) => {
                 let cur = root;
-                for (const c of word) {
+                for (let c of word) {
                     if (!cur.children.has(c)) {
                         cur.children.set(c, new TrieNode());
                     }
@@ -32,32 +28,33 @@
                 cur.endOfWord = true;
             };
 
-            // Build Trie
+
             for (const word of words) {
                 addWord(word);
             }
 
-            const ROWS = board.length;
-            const COLS = board[0].length;
+
+            const rows = board.length;
+            const cols = board[0].length;
             const res = new Set();
-            const visit = new Set();
+            const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
 
             const dfs = (r, c, node, word) => {
                 if (
-                    r < 0 || c < 0 ||
-                    r >= ROWS || c >= COLS ||
-                    visit.has(`${r},${c}`) ||
-                    !node.children.has(board[r][c])
+                    r < 0 || c < 0 || r >= rows || c >= cols ||
+                    visited[r][c] || !node.children.has(board[r][c])
                 ) {
                     return;
                 }
 
-                visit.add(`${r},${c}`);
-                node = node.children.get(board[r][c]);
-                word += board[r][c];
+                const char = board[r][c];
+                visited[r][c] = true;
+                node = node.children.get(char);
+                word += char;
 
                 if (node.endOfWord) {
                     res.add(word);
+                    node.endOfWord = false;
                 }
 
                 dfs(r + 1, c, node, word);
@@ -65,133 +62,28 @@
                 dfs(r, c + 1, node, word);
                 dfs(r, c - 1, node, word);
 
-                visit.delete(`${r},${c}`);
+                visited[r][c] = false;
             };
 
-            for (let r = 0; r < ROWS; r++) {
-                for (let c = 0; c < COLS; c++) {
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
                     dfs(r, c, root, '');
                 }
             }
 
             return Array.from(res);
-        }
-
-
+        };
 
         
-
-        // Method: 2
-        class TrieNode {
-            constructor() {
-                this.children = new Map();
-                this.isWord = false;
-            }
-        }
-
-
-        class Solution {
-            constructor() {
-                this.root = new TrieNode();
-            }
-
-             // Add a word to the Trie
-            addWord(word) {
-                let cur = this.root;
-                for (const c of word) {
-                    if (!cur.children.has(c)) {
-                        cur.children.set(c, new TrieNode());
-                    }
-                    cur = cur.children.get(c);
-                }
-                cur.isWord = true;
-            }
-
-
-            findWords(board, words) {
-                // First, insert all words into the Trie
-                for (const word of words) {
-                    this.addWord(word);
-                }
-
-                const ROWS = board.length;
-                const COLS = board[0].length;
-
-                // To store unique found words
-                const res = new Set();
-
-                // To track visited cells during DFS
-                const visit = new Set();
-
-                const dfs = (r, c, node, word) => {
-
-                    // Base conditions: out of bounds, already visited, or no matching child
-                    if (
-                        r < 0 ||
-                        c < 0 ||
-                        r >= ROWS ||
-                        c >= COLS ||
-                        visit.has(`${r},${c}`) ||
-                        !node.children.has(board[r][c])
-                    ) {
-                        return;
-                    }
-
-                    // Mark current cell as visited
-                    visit.add(`${r},${c}`);
-
-                    // Move to the next node in the Trie
-                    node = node.children.get(board[r][c]);
-
-                    // Append character to current word path
-                    word += board[r][c];
-
-                    // If a valid word is found, add it to the result
-                    if (node.isWord) {
-                        res.add(word);
-                    }
-
-
-                    // Explore all 4 directions: down, up, right, left
-                    dfs(r + 1, c, node, word);
-                    dfs(r - 1, c, node, word);
-                    dfs(r, c + 1, node, word);
-                    dfs(r, c - 1, node, word);
-
-                    // Backtrack: unmark the current cell
-                    visit.delete(`${r},${c}`);
-                };
-
-
-                // Start DFS from each cell on the board
-                for (let r = 0; r < ROWS; r++) {
-                    for (let c = 0; c < COLS; c++) {
-                        dfs(r, c, this.root, '');
-                    }
-                }
-
-
-                // Convert result set to array and return
-                return Array.from(res);
-            }
-
-        }
-
-
-        // Test the code with a sample input
         const board = [
             ['o', 'a', 'a', 'n'],
             ['e', 't', 'a', 'e'],
             ['i', 'h', 'k', 'r'],
             ['i', 'f', 'l', 'v']
         ];
-
         const words = ["oath", "pea", "eat", "rain"];
-
-        const solution = new Solution();
-        const result = solution.findWords(board, words);
+        const result = findWords(board, words);
         console.log(result);
     </script>
 </body>
-
 </html>
