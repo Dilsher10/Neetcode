@@ -9,6 +9,79 @@
 
 <body>
     <script>
+        // Method: 1
+        class TrieNode {
+            constructor() {
+                this.children = new Map();
+                this.endOfWord = false;
+            }
+        }
+
+        function findWords(board, words) {
+            const root = new TrieNode();
+
+            // Add a word to the Trie
+            const addWord = (word) => {
+                let cur = root;
+                for (const c of word) {
+                    if (!cur.children.has(c)) {
+                        cur.children.set(c, new TrieNode());
+                    }
+                    cur = cur.children.get(c);
+                }
+                cur.endOfWord = true;
+            };
+
+            // Build Trie
+            for (const word of words) {
+                addWord(word);
+            }
+
+            const ROWS = board.length;
+            const COLS = board[0].length;
+            const res = new Set();
+            const visit = new Set();
+
+            const dfs = (r, c, node, word) => {
+                if (
+                    r < 0 || c < 0 ||
+                    r >= ROWS || c >= COLS ||
+                    visit.has(`${r},${c}`) ||
+                    !node.children.has(board[r][c])
+                ) {
+                    return;
+                }
+
+                visit.add(`${r},${c}`);
+                node = node.children.get(board[r][c]);
+                word += board[r][c];
+
+                if (node.endOfWord) {
+                    res.add(word);
+                }
+
+                dfs(r + 1, c, node, word);
+                dfs(r - 1, c, node, word);
+                dfs(r, c + 1, node, word);
+                dfs(r, c - 1, node, word);
+
+                visit.delete(`${r},${c}`);
+            };
+
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    dfs(r, c, root, '');
+                }
+            }
+
+            return Array.from(res);
+        }
+
+
+
+        
+
+        // Method: 2
         class TrieNode {
             constructor() {
                 this.children = new Map();
