@@ -9,14 +9,12 @@
     <script>
         // Method 1
         class Solution {
-
             combinationSum(nums, target) {
                 let ans = [];  // Final list to store all valid combinations
                 let cur = [];  // Temporary list to build current combination
                 this.backtrack(nums, target, ans, cur, 0);  // Start backtracking
                 return ans;
             }
-
 
             // This is a backtracking function to find all combinations that sum up to a target
             backtrack(nums, target, ans, cur, index) {
@@ -43,7 +41,6 @@
                 }
             }
         }
-
 
         const solution = new Solution();
         console.log(solution.combinationSum([2, 3, 6, 7], 7));
