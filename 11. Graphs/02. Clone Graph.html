@@ -9,28 +9,28 @@
     <script>
         // Method: 1
         var cloneGraph = function (node) {
-            const map = new Map();
+            const hashMap = new Map();
 
             const dfs = (node) => {
                 if (node === null) {
                     return null;
                 }
 
-                if (map.has(node)) {
-                    return map.get(node);
+                if (hashMap.has(node)) {
+                    return hashMap.get(node);
                 }
 
                 const copy = new Node(node.val);
-                map.set(node, copy);
+                hashMap.set(node, copy);
 
                 for (let nei of node.neighbors) {
-                    copy.neighbors.push(dfs(nei, map));
+                    copy.neighbors.push(dfs(nei, hashMap));
                 }
 
                 return copy;
             }
 
-            return dfs(node, map);
+            return dfs(node, hashMap);
         };
 
 
