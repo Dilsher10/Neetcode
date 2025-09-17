@@ -8,28 +8,29 @@
 <body>
     <script>
         function rotate(matrix) {
-            let l = 0;
-            let r = matrix.length - 1;
+            let left = 0;
+            let right = matrix.length - 1;
 
             while (l < r) {
-                for (let i = 0; i < r - l; i++) {
+                for (let i = 0; i < right - left; i++) {
+                    const top = left;
+                    const bottom = right;
 
                     // save the topleft
-                    const topLeft = matrix[l][l + i];
+                    const topLeft = matrix[top][left + i];
 
                     // move bottom left into top left
-                    matrix[l][l + i] = matrix[r - i][l];
+                    matrix[top][left + i] = matrix[bottom - i][l];
 
                     // move bottom right into bottom left
-                    matrix[r - i][l] = matrix[r][r - i];
+                    matrix[bottom - i][l] = matrix[bottom][r - i];
 
                     // move top right into bottom right
-                    matrix[r][r - i] = matrix[l + i][r];
+                    matrix[bottom][r - i] = matrix[top + i][r];
 
                     // move top left into top right
-                    matrix[l + i][r] = topLeft;
+                    matrix[top + i][r] = topLeft;
                 }
-                r--;
                 l++;
             }
         }
