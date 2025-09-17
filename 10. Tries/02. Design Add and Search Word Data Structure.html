@@ -9,6 +9,64 @@
 
 <body>
     <script>
+        // Method: 1
+         class TrieNode {
+            constructor() {
+                this.children = new Map();
+                this.endOfWord = false;
+            }
+        }
+
+        var WordDictionary = function () {
+            this.root = new TrieNode();
+        };
+
+       
+        WordDictionary.prototype.addWord = function (word) {
+            let cur = this.root;
+            for (let c of word) {
+                if (!cur.children.has(c)) {
+                    cur.children.set(c, new TrieNode());
+                }
+                cur = cur.children.get(c);
+            }
+            cur.endOfWord = true;
+        };
+
+     
+
+        WordDictionary.prototype.search = function (word) {
+            const dfs = (node, i) => {
+
+                if (i === word.length) {
+                    return node.endOfWord;
+                }
+
+                const ch = word[i];
+                
+                if (ch === '.') {
+                    for (let child of node.children.values()) {
+                        if (dfs(child, i + 1)) {
+                            return true;
+                        }
+                    }
+                    return false;
+                } else {
+                    if (!node.children.has(ch)) {
+                        return false;
+                    }
+                    return dfs(node.children.get(ch), i + 1);
+                }
+            };
+
+            return dfs(this.root, 0);
+        };
+
+
+
+        
+
+        // Method: 2
         // Trie node class representing each character node
         class TrieNode {
             constructor() {

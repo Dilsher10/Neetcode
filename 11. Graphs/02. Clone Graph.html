@@ -1,14 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clone Graph</title>
 </head>
-
 <body>
     <script>
+        // Method: 1
+        var cloneGraph = function (node) {
+            const hashMap = new Map();
+
+            const dfs = (node) => {
+                if (node === null) {
+                    return null;
+                }
+
+                if (hashMap.has(node)) {
+                    return hashMap.get(node);
+                }
+
+                const copy = new Node(node.val);
+                hashMap.set(node, copy);
+
+                for (let nei of node.neighbors) {
+                    copy.neighbors.push(dfs(nei, hashMap));
+                }
+
+                return copy;
+            }
+
+            return dfs(node, hashMap);
+        };
+
+
+
+
+
+
+
+
+
+        
+        // Metthod:2 
         class Solution {
 
             dfs(node, hashMap) {

@@ -9,27 +9,25 @@
 
 <body>
     <script>
-
         function minMeetingRooms(intervals) {
-
             if (!intervals || intervals.length === 0) return 0;
 
             intervals.sort((a, b) => a[0] - b[0]);
 
-            const heap = [intervals[0][1]];
+            const heap = [];
+
+            heap.push(intervals[0][1]);
 
             for (let i = 1; i < intervals.length; i++) {
+                const [start, end] = intervals[i];
 
-                let start = intervals[i][0];
-                let end = intervals[i][1];
-
-
+                // Find and remove the room that gets free the earliest (i.e., minimum end time)
                 if (start >= heap[0]) {
-                    heap.shift();
+                    heap.shift(); // Still O(N), so not ideal
                 }
 
                 heap.push(end);
-                heap.sort((a, b) => a - b);
+                heap.sort((a, b) => a - b); // Still O(N log N), inside a loop
             }
 
             return heap.length;

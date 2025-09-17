@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Combination Sum</title>
 </head>
-
 <body>
     <script>
+        // Method 1
         class Solution {
-
             combinationSum(nums, target) {
                 let ans = [];  // Final list to store all valid combinations
                 let cur = [];  // Temporary list to build current combination
                 this.backtrack(nums, target, ans, cur, 0);  // Start backtracking
                 return ans;
             }
-            
 
             // This is a backtracking function to find all combinations that sum up to a target
             backtrack(nums, target, ans, cur, index) {
@@ -45,10 +42,39 @@
             }
         }
 
-
         const solution = new Solution();
         console.log(solution.combinationSum([2, 3, 6, 7], 7));
+
+
+
+
+
+        // Method 2
+        var combinationSum = function (candidates, target) {
+            const ans = [];
+            const cur = [];
+
+            const backtrack = (target, index) => {
+                if (target === 0) {
+                    ans.push([...cur]);
+                    return;
+                }
+                if (target < 0 || index === candidates.length) {
+                    return;
+                }
+
+                // Choose current candidate
+                cur.push(candidates[index]);
+                backtrack(target - candidates[index], index); // Can reuse the same index
+                cur.pop();
+
+                // Skip current candidate
+                backtrack(target, index + 1);
+            };
+
+            backtrack(target, 0);
+            return ans;
+        };
     </script>
 </body>
-
 </html>
