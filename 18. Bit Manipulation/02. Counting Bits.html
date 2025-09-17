@@ -59,6 +59,30 @@
             }
             return res;
         }
+
+
+
+
+
+         var countBits = function (n) {
+            // Create an array of size n + 1 filled with 0s
+            // dp[i] will store the number of 1's in the binary representation of i
+            const dp = new Array(n + 1).fill(0);
+
+            // Loop from 1 to n (since dp[0] is already 0)
+            for (let i = 1; i <= n; i++) {
+                // Right shift i by 1 (i.e., divide by 2), which removes the least significant bit
+                // Add 1 if the least significant bit of i is 1 (i.e., i is odd)
+                dp[i] = dp[i >> 1] + (i & 1);
+
+                // Explanation:
+                // dp[i >> 1] gives the number of 1's in i without the last bit
+                // (i & 1) is 1 if the last bit is 1, else 0
+            }
+
+            // Return the result array
+            return dp;
+        };
     </script>
 </body>
 
