@@ -21,15 +21,21 @@
             return res;
         }
 
-        nums = [1,2,3];
+        nums = [1, 2, 3];
         console.log(missingNumber(nums));
 
 
 
         // Method: 2
 
-        function missingNumber(nums){
+        function missingNumber(nums) {
             const newSet = new Set(nums);
+
+            for (let i = 0; i < nums.length; i++) {
+                if (!newSet.has(i)) {
+                    return i;
+                }
+            }
         }
     </script>
 </body>
