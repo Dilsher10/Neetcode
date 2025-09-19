@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top K Frequent Elements</title>
 </head>
-
 <body>
     <script>
         function topKFrequentElement(nums, k) {
-
             const count = {};
             const freq = Array.from({ length: nums.length + 1 }, () => []);
 
@@ -36,7 +33,34 @@
 
         nums = [1, 2, 2, 3, 3, 3], k = 2
         console.log(topKFrequentElement(nums, k));
+
+
+        function topKFrequent(nums, k) {
+            const freqMap = new Map();
+
+            // Step 1: Build frequency map
+            for (let num of nums) {
+                freqMap.set(num, (freqMap.get(num) || 0) + 1);
+            }
+
+            // Step 2: Build the buckets
+            const buckets = Array(nums.length + 1).fill().map(() => []);
+
+            for (let [num, freq] of freqMap.entries()) {
+                buckets[freq].push(num);
+            }
+
+            // Step 3: Gather top k frequent elements from buckets
+            const result = [];
+            for (let i = buckets.length - 1; i >= 0 && result.length < k; i--) {
+                for (let num of buckets[i]) {
+                    result.push(num);
+                    if (result.length === k) break;
+                }
+            }
+
+            return result;
+        }
     </script>
 </body>
-
 </html>
