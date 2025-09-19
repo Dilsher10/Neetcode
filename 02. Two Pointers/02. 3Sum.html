@@ -10,7 +10,6 @@
 <body>
     <script>
         function threeSum(nums) {
-
             nums.sort((a, b) => a - b);
             const res = [];
 
@@ -18,22 +17,20 @@
                 if (nums[i] > 0) break;
                 if (i > 0 && nums[i] === nums[i - 1]) continue;
 
-                let j = i + 1;
-                let k = nums.length - 1;
-
-                while (j < k) {
-                    const sum = nums[i] + nums[j] + nums[k];
-
+                let l = i + 1;
+                let r = nums.length - 1;
+                while (l < r) {
+                    const sum = nums[i] + nums[l] + nums[r];
                     if (sum > 0) {
-                        k--;
+                        r--;
                     } else if (sum < 0) {
-                        j++;
+                        l++;
                     } else {
-                        res.push([nums[i], nums[j], nums[k]]);
-                        j++;
-                        k--;
-                        while (j < k && nums[j] === nums[j - 1]) {
-                            j++;
+                        res.push([nums[i], nums[l], nums[r]]);
+                        l++;
+                        r--;
+                        while (l < r && nums[l] === nums[l - 1]) {
+                            l++;
                         }
                     }
                 }
