@@ -20,10 +20,12 @@
                     charSet.delete(s[left]);
                     left++;
                 }
+
                 charSet.add(s[right]);
                 let length = right - left + 1;
                 maxLength = Math.max(maxLength, length);
             }
+            
             return maxLength;
         }
 
