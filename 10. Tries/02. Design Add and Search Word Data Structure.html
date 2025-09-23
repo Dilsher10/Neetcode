@@ -35,32 +35,7 @@
 
      
 
-        WordDictionary.prototype.search = function (word) {
-            const dfs = (node, i) => {
 
-                if (i === word.length) {
-                    return node.endOfWord;
-                }
-
-                const ch = word[i];
-                
-                if (ch === '.') {
-                    for (let child of node.children.values()) {
-                        if (dfs(child, i + 1)) {
-                            return true;
-                        }
-                    }
-                    return false;
-                } else {
-                    if (!node.children.has(ch)) {
-                        return false;
-                    }
-                    return dfs(node.children.get(ch), i + 1);
-                }
-            };
-
-            return dfs(this.root, 0);
-        };
 
 
 
