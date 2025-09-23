@@ -21,17 +21,7 @@
             this.root = new TrieNode();
         };
 
-       
-        WordDictionary.prototype.addWord = function (word) {
-            let cur = this.root;
-            for (let c of word) {
-                if (!cur.children.has(c)) {
-                    cur.children.set(c, new TrieNode());
-                }
-                cur = cur.children.get(c);
-            }
-            cur.endOfWord = true;
-        };
+
 
      
 
