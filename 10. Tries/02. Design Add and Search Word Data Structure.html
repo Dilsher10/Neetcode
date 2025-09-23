@@ -9,25 +9,22 @@
 
 <body>
     <script>
-        // Trie node class representing each character node
         class TrieNode {
             constructor() {
-                this.children = new Map();  // Map to store child nodes (character -> TrieNode)
-                this.word = false;          // Marks whether this node is the end of a valid word
+                this.children = new Map();  
+                this.word = false;        
             }
         }
 
-        // WordDictionary using Trie structure
+
+       
         class WordDictionary {
             constructor() {
-                this.root = new TrieNode(); // Root node of the Trie
+                this.root = new TrieNode();
             }
-
-
 
             addWord(word) {
                 let cur = this.root;
-
                 for (const c of word) {
                     // If character doesn't exist as a child, create a new TrieNode
                     if (!cur.children.has(c)) {
