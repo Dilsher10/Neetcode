@@ -18,6 +18,8 @@
                     }
                 }
 
+
+
                 // Step 2: Build the graph by comparing adjacent words
                 for (let i = 0; i < words.length - 1; i++) {
                     const w1 = words[i];
@@ -41,6 +43,8 @@
                         }
                     }
                 }
+
+
 
                 // Step 3: Topological Sort using DFS
                 const visited = {}; // Track visiting state: true = visiting, false = visited
