@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Integer Sum II</title>
+</head>
+
+<body>
+    <script>
+        function twoSum(numbers, target) {
+            let l = 0;
+            let r = numbers.length - 1;
+
+            while (l < r) {
+                const curSum = numbers[l] + numbers[r];
+
+                if (curSum < target) {
+                    l++;
+                } else if (curSum > target) {
+                    r--;
+                } else {
+                    return [numbers[l], numbers[r]];
+                }
+            }
+
+            return [];
+        }
+
+        nums = [1, 2, 3, 4], target = 3
+        console.log(twoSum(nums, target));
+    </script>
+</body>
+
+</html>
