@@ -10,6 +10,10 @@
 <body>
     <script>
         function trap(height) {
+            if (!height || height.length === 0) {
+                return 0;
+            }
+
             let l = 0;
             let r = height.length - 1;
             let leftMax = 0;
@@ -21,10 +25,10 @@
                 rightMax = Math.max(rightMax, height[r]);
 
                 if (leftMax < rightMax) {
-                    waterTrapped += (leftMax - height[l]);
+                    waterTrapped += leftMax - height[l];
                     l++;
                 } else {
-                    waterTrapped += (rightMax - height[r]);
+                    waterTrapped += rightMax - height[r];
                     r--;
                 }
             }
