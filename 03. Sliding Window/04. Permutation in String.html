@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permutation in String</title>
+</head>
+
+<body>
+    <script>
+        function checkInclusion(s1, s2) {
+            if (s1.length > s2.length) return false;
+
+            const s1Count = new Array(26).fill(0);
+            const windowCount = new Array(26).fill(0);
+
+            // Count characters in s1
+            for (let i = 0; i < s1.length; i++) {
+                s1Count[s1.charCodeAt(i) - 'a'.charCodeAt(0)]++;
+            }
+
+            let left = 0;
+
+            for (let right = 0; right < s2.length; right++) {
+                // Add current character to window
+                windowCount[s2.charCodeAt(right) - 'a'.charCodeAt(0)]++;
+
+                // Shrink window if size > s1.length
+                if (right - left + 1 > s1.length) {
+                    windowCount[s2.charCodeAt(left) - 'a'.charCodeAt(0)]--;
+                    left++;
+                }
+
+                // If window size matches, compare arrays directly
+                if (right - left + 1 === s1.length) {
+                    let match = true;
+                    for (let i = 0; i < 26; i++) {
+                        if (s1Count[i] !== windowCount[i]) {
+                            match = false;
+                            break;
+                        }
+                    }
+                    if (match) return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        s1 = "abc", s2 = "lecabee"
+        console.log(checkInclusion(s1, s2));
+    </script>
+</body>
+
+</html>
