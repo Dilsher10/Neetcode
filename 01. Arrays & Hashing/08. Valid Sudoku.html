@@ -8,6 +8,7 @@
 <body>
     <script>
         function isValidSudoku(board) {
+            
             const rows = Array.from({ length: 9 }, () => new Set());
             const cols = Array.from({ length: 9 }, () => new Set());
             const boxes = Array.from({ length: 9 }, () => new Set());
