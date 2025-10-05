@@ -13,7 +13,6 @@
                 this.minStack = [];
             }
 
-
             push(val) {
                 this.stack.push(val);
                 val = Math.min(val, this.minStack.length === 0 ? val : this.minStack[this.minStack.length - 1],);
