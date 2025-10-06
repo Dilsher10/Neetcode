@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Fleet</title>
+</head>
+
+<body>
+    <script>
+        function carFleet(target, position, speed) {
+            let pair = position.map((p, i) => [p, speed[i]]);
+            pair.sort((a, b) => b[0] - a[0]);
+            let stack = [];
+
+            for (let [p, s] of pair) {
+
+                // Time to reach destination
+                let time = (target - p) / s;
+
+                stack.push(time);
+
+                // If the current car catches up to the car ahead, merge fleet
+                if (stack.length >= 2 && stack[stack.length - 1] <= stack[stack.length - 2]) {
+                    stack.pop(); // Remove the current car's time (it's merged)
+                }
+            }
+
+            return stack.length;  // Number of car fleets
+        }
+
+        target = 10, position = [4, 1, 0, 7], speed = [2, 2, 1, 1];
+        console.log(carFleet(target, position, speed));
+    </script>
+</body>
+
+</html>
