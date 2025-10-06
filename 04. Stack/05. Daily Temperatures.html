@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Temperatures</title>
+</head>
+
+<body>
+    <script>
+        function dailyTemperatures(temperatures) {
+            const res = new Array(temperatures.length).fill(0);
+            const stack = []; // pair: [temp, index]
+
+            for (let i = 0; i < temperatures.length; i++) {
+                const t = temperatures[i];
+                while (stack.length > 0 && t > stack[stack.length - 1][0]) {
+                    const [stackT, stackInd] = stack.pop();
+                    res[stackInd] = i - stackInd;
+                }
+                stack.push([t, i]);
+            }
+            return res;
+        }
+
+        const temperatures = [30, 38, 30, 36, 35, 40, 28]
+        console.log(dailyTemperatures(temperatures));
+    </script>
+</body>
+
+</html>
