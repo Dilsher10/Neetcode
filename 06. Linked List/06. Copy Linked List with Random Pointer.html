@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy Linked List with Random Pointer</title>
+</head>
+
+<body>
+    <script>
+        function copyRandomList(head) {
+            const oldToCopy = new Map();
+            oldToCopy.set(null, null);
+
+            let cur = head;
+            while (cur) {
+                const copy = new Node(cur.val);
+                oldToCopy.set(cur, copy);
+                cur = cur.next;
+            }
+
+            cur = head;
+            while (cur) {
+                const copy = oldToCopy.get(cur);
+                copy.next = oldToCopy.get(cur.next);
+                copy.random = oldToCopy.get(cur.random);
+                cur = cur.next;
+            }
+
+            return oldToCopy.get(head);
+        }
+    </script>
+</body>
+
+</html>
