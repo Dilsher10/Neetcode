@@ -10,24 +10,26 @@
 <body>
     <script>
         function carFleet(target, position, speed) {
+            if (position.length === 0 || speed.length === 0 || target === 0) {
+                return 0;
+            }
+
             let pair = position.map((p, i) => [p, speed[i]]);
-            pair.sort((a, b) => b[0] - a[0]);
+            pair.sort((a, b) => b[0] - a[0]);  // sort by position descending
+
             let stack = [];
 
             for (let [p, s] of pair) {
-
-                // Time to reach destination
                 let time = (target - p) / s;
 
-                stack.push(time);
-
-                // If the current car catches up to the car ahead, merge fleet
-                if (stack.length >= 2 && stack[stack.length - 1] <= stack[stack.length - 2]) {
-                    stack.pop(); // Remove the current car's time (it's merged)
+                // Only push if this car doesn't catch up to the car ahead
+                if (stack.length === 0 || time > stack[stack.length - 1]) {
+                    stack.push(time);
                 }
+                // else: it catches up, becomes part of the same fleet
             }
 
-            return stack.length;  // Number of car fleets
+            return stack.length;
         }
 
         target = 10, position = [4, 1, 0, 7], speed = [2, 2, 1, 1];
