@@ -21,6 +21,7 @@
                 if (openN < n) {
                     backtrack(openN + 1, closedN, stack + '(');
                 }
+
                 if (closedN < openN) {
                     backtrack(openN, closedN + 1, stack + ')');
                 }
