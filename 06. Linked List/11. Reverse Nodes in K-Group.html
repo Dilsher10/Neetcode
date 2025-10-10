@@ -1,68 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reverse Nodes in K-Group</title>
 </head>
-
 <body>
     <script>
         function reverseKGroup(head, k) {
             // If the list is empty or k is 1, no reversal is needed
             if (!head || k === 1) return head;
 
-            // Create a dummy node that points to the head of the list
-            // This helps simplify edge cases (e.g., reversing the first group)
             const dummy = new ListNode(0, head);
             let groupPrev = dummy;
 
-            // Helper function to get the k-th node from the current node
-            const getKth = (curr, k) => {
-                while (curr && k > 0) {
-                    curr = curr.next;
-                    k--;
-                }
-                return curr;
-            }
-
-            // Loop through the list in groups of k nodes
             while (true) {
-                // Find the k-th node from groupPrev
-                const kth = getKth(groupPrev, k);
-
-                // If there are fewer than k nodes left, break the loop
-                if (!kth) {
-                    break;
+                // Step 1: Find kth Node
+                let kth = groupPrev;
+                let steps = k;
+                while (steps > 0 && kth) {
+                    kth = kth.next;
+                    steps--;
                 }
+                if (!kth) break;
 
-                // Save the node after the k-th node (start of next group)
+
+                // Step 2: Define Pointers
                 const groupNext = kth.next;
+                let prev = groupNext;
+                let curr = groupPrev.next;
 
-                // Reverse the current group
-                let prev = groupNext;              // Initially, prev points to groupNext
-                let curr = groupPrev.next;         // curr starts at the first node of the group
 
-                // Reverse the k nodes
+                // Step 3: Reverse the Group
                 while (curr !== groupNext) {
-                    const tmp = curr.next;         // Temporarily store the next node
-                    curr.next = prev;              // Reverse the link
-                    prev = curr;                   // Move prev forward
-                    curr = tmp;                    // Move curr forward
+                    let tmp = curr.next;
+                    curr.next = prev;
+                    prev = curr;
+                    curr = tmp;
                 }
 
-                // Now prev is the new head of the reversed group
-                // Connect the previous part of the list to the new head
-                const tmp = groupPrev.next;        // Store the old start of the group
-                groupPrev.next = kth;             // Link groupPrev to the new head
-                groupPrev = tmp;                  // Move groupPrev to the end of the reversed group
+                // Step 4: Reconnect the Reversed Group
+                const tmp = groupPrev.next;
+                groupPrev.next = kth;
+                groupPrev = tmp;
             }
 
-            // Return the new head of the list
             return dummy.next;
-        }
+        };
     </script>
 </body>
-
 </html>
