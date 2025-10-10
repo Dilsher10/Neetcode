@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kth Largest Element in an Array</title>
 </head>
+
 <body>
     <script>
-        
+        function findKthLargest(nums, k) {
+            const minHeap = new MinPriorityQueue();
+
+            for (let num of nums) {
+                minHeap.push(num);
+
+                if (minHeap.size() > k) {
+                    minHeap.pop();
+                }
+            }
+
+            return minHeap.front();
+        }
     </script>
 </body>
+
 </html>
