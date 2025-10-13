@@ -10,7 +10,7 @@
 <body>
     <script>
         function combinationSum2(candidates, target) {
-            this.res = [];
+            const res = [];
             candidates.sort((a, b) => a - b);
 
             const dfs = (i, cur, total) => {
@@ -23,19 +23,22 @@
                     return;
                 }
 
+                // Include current candidate
                 cur.push(candidates[i]);
                 dfs(i + 1, cur, total + candidates[i]);
                 cur.pop();
 
+                // Skip duplicates
                 while (i + 1 < candidates.length && candidates[i] === candidates[i + 1]) {
                     i++;
                 }
 
+                // Explore without current candidate
                 dfs(i + 1, cur, total);
             }
 
-            this.dfs(0, [], 0);
-            return this.res;
+            dfs(0, [], 0);
+            return res;
         }
     </script>
 </body>
