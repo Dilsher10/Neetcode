@@ -1,13 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Combination Sum II</title>
 </head>
+
 <body>
     <script>
-        
+        function combinationSum2(candidates, target) {
+            this.res = [];
+            candidates.sort((a, b) => a - b);
+
+            const dfs = (i, cur, total) => {
+                if (total === target) {
+                    res.push([...cur]);
+                    return;
+                }
+
+                if (total > target || i === candidates.length) {
+                    return;
+                }
+
+                cur.push(candidates[i]);
+                dfs(i + 1, cur, total + candidates[i]);
+                cur.pop();
+
+                while (i + 1 < candidates.length && candidates[i] === candidates[i + 1]) {
+                    i++;
+                }
+
+                dfs(i + 1, cur, total);
+            }
+
+            this.dfs(0, [], 0);
+            return this.res;
+        }
     </script>
 </body>
+
 </html>
