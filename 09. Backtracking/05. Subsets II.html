@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subsets II</title>
+</head>
+
+<body>
+    <script>
+        function subsetsWithDup(nums) {
+            const res = [];
+
+            //Sort to handle duplicates
+            nums.sort((a, b) => a - b);
+
+            const backtrack = (start, subset) => {
+                res.push([...subset]);
+
+                for (let i = start; i < nums.length; i++) {
+                    if (i > start && nums[i] === nums[i - 1]) {
+                        continue;
+                    }
+
+                    subset.push(nums[i]);
+                    backtrack(i + 1, subset);
+                    subset.pop();
+                }
+            }
+
+            backtrack(0, []);
+            return res;
+        }
+    </script>
+</body>
+
+</html>
