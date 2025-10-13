@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subsets</title>
 </head>
+
 <body>
     <script>
-        
+        function subsets(nums) {
+            const res = [];
+            const subset = [];
+
+            const dfs = (i) => {
+                if (i >= nums.length) {
+                    res.push([...subset]);
+                    return;
+                }
+
+                // decision to include nums[i]
+                subset.push(nums[i]);
+                dfs(i + 1);
+
+                // decision not to include nums[i]
+                subset.pop();
+                dfs(i + 1);
+            }
+
+            dfs(0);
+            return res;
+        }
     </script>
 </body>
+
 </html>
