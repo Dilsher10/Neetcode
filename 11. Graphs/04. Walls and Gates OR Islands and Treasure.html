@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walls and Gates OR Islands and Treasure</title>
+</head>
+
+<body>
+    <script>
+        function islandsAndTreasure(grid) {
+            const ROWS = grid.length;
+            const COLS = grid[0].length;
+            const visit = new Set();
+            const q = [];
+
+            // Step 1: Enqueue all gates (cells with value 0)
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    if (grid[r][c] === 0) {
+                        q.push([r, c]);
+                        visit.add(`${r},${c}`);
+                    }
+                }
+            }
+
+
+            // Step 2: BFS from all gates
+            function bfs(r, c) {
+                const key = `${r},${c}`;
+
+                if (
+                    r < 0 || c < 0 ||
+                    r >= ROWS || c >= COLS ||
+                    grid[r][c] === -1 || visit.has(key)
+                ) {
+                    return;
+                }
+
+                q.push([r, c]);
+                visit.add(key);
+            }
+
+
+
+            let dist = 0;
+
+            while (q.length > 0) {
+                let len = q.length;
+
+                for (let i = 0; i < len; i++) {
+                    const [r, c] = q.shift();
+                    grid[r][c] = dist;
+
+                    bfs(r + 1, c);
+                    bfs(r - 1, c);
+                    bfs(r, c + 1);
+                    bfs(r, c - 1);
+                }
+
+                dist++;
+            }
+        }
+
+        let grid = [
+            [2147483647, -1, 0, 2147483647],
+            [2147483647, 2147483647, 2147483647, -1],
+            [2147483647, -1, 2147483647, -1],
+            [0, -1, 2147483647, 2147483647]
+        ];
+
+        islandsAndTreasure(grid);
+        console.log(grid);
+    </script>
+</body>
+
+</html>
