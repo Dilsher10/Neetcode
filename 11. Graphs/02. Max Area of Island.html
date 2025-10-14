@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Area of Island</title>
+</head>
+
+<body>
+    <script>
+        var maxAreaOfIsland = function (grid) {
+            const rows = grid.length;
+            const cols = grid[0].length;
+
+            function dfs(r, c) {
+                // Check bounds and if the cell is water (0)
+                if (r < 0 || c < 0 || r >= rows || c >= cols || grid[r][c] === 0) {
+                    return 0;
+                }
+
+                // Mark the cell as visited by setting it to 0
+                grid[r][c] = 0;
+
+                // Explore all 4 directions and calculate area
+                let area = 1;
+                area += dfs(r + 1, c); // down
+                area += dfs(r - 1, c); // up
+                area += dfs(r, c + 1); // right
+                area += dfs(r, c - 1); // left
+
+                return area;
+            }
+
+            let maxArea = 0;
+
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    if (grid[r][c] === 1) {
+                        maxArea = Math.max(maxArea, dfs(r, c));
+                    }
+                }
+            }
+
+            return maxArea;
+        };
+
+
+        const grid = [
+            [0, 1, 1, 0, 1],
+            [1, 0, 1, 0, 1],
+            [0, 1, 1, 0, 1],
+            [0, 1, 0, 0, 1]
+        ];
+        console.log(maxAreaOfIsland(grid)); // Output: 6
+    </script>
+</body>
+
+</html>
