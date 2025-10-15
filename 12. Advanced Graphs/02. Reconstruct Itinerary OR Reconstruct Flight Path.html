@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reconstruct Itinerary OR Reconstruct Flight Path</title>
+</head>
+
+<body>
+    <script>
+        // Solution: Hierholzer’s Algorithm (DFS with lexical priority).
+        // This is a variant of Eulerian Path problem.
+
+        var findItinerary = function (tickets) {
+            const graph = new Map();
+
+            // Build the graph: map from airport -> list of destinations
+            for (let [from, to] of tickets) {
+                if (!graph.has(from)) graph.set(from, []);
+                graph.get(from).push(to);
+            }
+
+            // Sort each adjacency list to get lexical order traversal
+            for (let destList of graph.values()) {
+                destList.sort();
+            }
+
+            const itinerary = [];
+
+            function dfs(airport) {
+                const destList = graph.get(airport) || [];
+
+                while (destList.length > 0) {
+                    // Always take the lex smallest next airport (front of sorted list)
+                    const next = destList.shift();
+                    dfs(next);
+                }
+
+                itinerary.push(airport);
+            }
+
+            dfs("JFK");
+
+            // Reverse at the end because we append after visiting all edges
+            return itinerary.reverse();
+        };
+
+        const tickets = [["BUF", "HOU"], ["HOU", "SEA"], ["JFK", "BUF"]];
+        console.log(findItinerary(tickets));
+    </script>
+</body>
+
+</html>
