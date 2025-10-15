@@ -1,13 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cheapest Flights Within K Stops</title>
 </head>
+
 <body>
     <script>
-        
+        function findCheapestPrice(n, flights, src, dst, k) {
+            // Build graph
+            const graph = new Map();
+            for (let [from, to, price] of flights) {
+                if (!graph.has(from)) graph.set(from, []);
+                graph.get(from).push([to, price]);
+            }
+
+            // Priority Queue: [cost, city, stops]
+            const pq = new PriorityQueue();
+            pq.enqueue([0, src, 0]);
+
+            // Track best prices to each city with given stops
+            const visited = new Map(); // key: city|stops, value: cost
+
+            while (!pq.isEmpty()) {
+                const [cost, city, stops] = pq.dequeue();
+
+                if (city === dst) return cost;
+
+                if (stops > k) continue;
+
+                const neighbors = graph.get(city) || [];
+                for (let [nextCity, price] of neighbors) {
+                    const nextCost = cost + price;
+                    const key = `${nextCity}|${stops}`;
+                    if (!visited.has(key) || visited.get(key) > nextCost) {
+                        visited.set(key, nextCost);
+                        pq.enqueue([nextCost, nextCity, stops + 1]);
+                    }
+                }
+            }
+
+            return -1;
+        };
     </script>
 </body>
+
 </html>
