@@ -10,27 +10,41 @@
 <body>
     <script>
         function checkValidString(s) {
+            // leftMin: minimum number of open parentheses that *must* be matched
+            // leftMax: maximum number of open parentheses that *could* be matched
             let leftMin = 0;
             let leftMax = 0;
 
+            // Iterate through each character in the input string
             for (const c of s) {
                 if (c === '(') {
+                    // An open parenthesis increases both min and max possible open counts
                     leftMin++;
                     leftMax++;
                 } else if (c === ')') {
+                    // A close parenthesis decreases both min and max open counts
                     leftMin--;
                     leftMax--;
                 } else {
+                    // A '*' can be '(', ')' or ''
+                    // Decrease min (if '*' is ')') and increase max (if '*' is '(')
                     leftMin--;
                     leftMax++;
                 }
+
+                // If max open parentheses go negative, too many ')' – invalid
                 if (leftMax < 0) {
                     return false;
                 }
+
+                // Min can't go below zero – we assume unmatched ')' can be ignored
+                // because '*' might compensate for it
                 if (leftMin < 0) {
                     leftMin = 0;
                 }
             }
+
+            // If min is zero, all open parentheses can be matched
             return leftMin === 0;
         }
 
