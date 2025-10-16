@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand of Straights</title>
+</head>
+
+<body>
+    <script>
+        function isNStraightHand(hand, groupSize) {
+            if (hand.length % groupSize !== 0) {
+                return false;
+            }
+
+            const count = {};
+            for (const n of hand) {
+                count[n] = (count[n] || 0) + 1;
+            }
+
+            const minPQ = new MinPriorityQueue();
+            for (const key in count) {
+                minPQ.push(Number(key));
+            }
+
+            while (!minPQ.isEmpty()) {
+                // Get the smallest card number currently available
+                const first = minPQ.front();
+
+                // Try to form a group starting from this smallest card
+                for (let i = first; i < first + groupSize; i++) {
+                    // If a needed card is missing, the hand cannot be rearranged properly
+                    if (!(i in count) || count[i] === 0) {
+                        return false;
+                    }
+
+                    // Use one occurrence of this card
+                    count[i] -= 1;
+
+                    // If we’ve used all cards of value i
+                    if (count[i] === 0) {
+                        // If it's not the smallest, the sequence is broken
+                        if (i !== minPQ.front()) {
+                            return false;
+                        }
+                        // Remove it from the queue since no more of this card are left
+                        minPQ.pop();
+                    }
+                }
+            }
+
+            return true;
+        }
+    </script>
+</body>
+
+</html>
