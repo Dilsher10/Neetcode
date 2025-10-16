@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partition Labels</title>
+</head>
+
+<body>
+    <script>
+        function partitionLabels(S) {
+            let lastIndex = {};
+            for (let i = 0; i < S.length; i++) {
+                lastIndex[S[i]] = i;
+            }
+
+            let res = [];
+            let size = 0;
+            let end = 0;
+            for (let i = 0; i < S.length; i++) {
+                size++;
+                end = Math.max(end, lastIndex[S[i]]);
+
+                if (i === end) {
+                    res.push(size);
+                    size = 0;
+                }
+            }
+            return res;
+        }
+
+        const s = "xyxxyzbzbbisl";
+        console.log(partitionLabels(s));
+    </script>
+</body>
+
+</html>
