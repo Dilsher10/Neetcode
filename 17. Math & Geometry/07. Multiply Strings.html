@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiply Strings</title>
+</head>
+
+<body>
+    <script>
+        function multiply(num1, num2) {
+            if (num1 === "0" || num2 === "0") return "0";
+
+            const n = num1.length, m = num2.length;
+            const result = Array(n + m).fill(0);
+
+            for (let i = n - 1; i >= 0; i--) {
+                for (let j = m - 1; j >= 0; j--) {
+                    const mul = (num1[i] - '0') * (num2[j] - '0');
+
+                    // Determine positions of value and carry in the result array
+                    const p1 = i + j;      // carry postion
+                    const p2 = i + j + 1;  // value position
+
+                    // Add current multiplication result to the existing number at position p2
+                    const sum = mul + result[p2];
+
+                    // Set current digit at p2 (ones place)
+                    result[p2] = sum % 10;
+
+                    // Carry over to p1 (tens place)
+                    result[p1] += Math.floor(sum / 10);
+                }
+            }
+
+            // This loop removes leading zeros from the result array
+            while (result[0] === 0) {
+                result.shift();
+            }
+
+            return result.join('');
+        }
+
+
+        console.log(multiply("123", "456"));  // Output: "56088"
+    </script>
+</body>
+
+</html>
