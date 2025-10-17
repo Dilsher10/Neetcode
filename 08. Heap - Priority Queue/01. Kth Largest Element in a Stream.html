@@ -11,22 +11,25 @@
     <script>
         class KthLargest {
             constructor(k, nums) {
+                this.minHeap = new MinPriorityQueue();
                 this.k = k;
-                this.minHeap = new MinHeap();
 
-                for (let num of nums) {
-                    this.add(num);
+                for (const num of nums) {
+                    this.minHeap.enqueue(num);
+                }
+
+                while (this.minHeap.size() > k) {
+                    this.minHeap.dequeue();
                 }
             }
 
+
             add(val) {
-                this.minHeap.push(val);
-
+                this.minHeap.enqueue(val);
                 if (this.minHeap.size() > this.k) {
-                    this.minHeap.pop();
+                    this.minHeap.dequeue();
                 }
-
-                return this.minHeap.peek();
+                return this.minHeap.front();
             }
         }
     </script>
