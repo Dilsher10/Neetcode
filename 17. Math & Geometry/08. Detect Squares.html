@@ -1,13 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detect Squares</title>
 </head>
+
 <body>
     <script>
-        
+        class DetectSquares {
+            constructor() {
+                // Map to store frequency count of each point as "x,y" string
+                this.ptsCount = new Map();
+
+                // Array to store all added points in original format [x, y]
+                this.pts = [];
+            }
+
+
+            add(point) {
+                const p = point.join(','); // Convert point to string format "x,y"
+
+                // Increment the count of this point in the map
+                this.ptsCount.set(p, (this.ptsCount.get(p) || 0) + 1);
+
+                // Add the point to the list of all points
+                this.pts.push(point);
+            }
+
+
+            count(point) {
+                let res = 0;
+                const [px, py] = point;
+
+                // Iterate over all previously added points
+                for (const [x, y] of this.pts) {
+                    // For a square, we need the absolute x and y distances to be equal,
+                    // and the points must not lie on the same vertical or horizontal line
+                    if (Math.abs(py - y) !== Math.abs(px - x) || x === px || y === py) {
+                        continue; // Not a valid diagonal of a square
+                    }
+
+                    // Now (x, y) and (px, py) are diagonal corners of a square.
+                    // We now look for the other two corners: (x, py) and (px, y)
+                    // The number of such squares is the product of their counts in the map
+                    res +=
+                        (this.ptsCount.get(`${x},${py}`) || 0) * // count of point (x, py)
+                        (this.ptsCount.get(`${px},${y}`) || 0);   // count of point (px, y)
+                }
+
+                return res;
+            }
+        }
+
+        const ds = new DetectSquares();
+
+        ds.add([3, 10]);
+        ds.add([11, 2]);
+        ds.add([3, 2]);
+
+        console.log(ds.count([11, 10])); // Output: 1
+        console.log(ds.count([14, 8]));  // Output: 0
     </script>
 </body>
+
 </html>
