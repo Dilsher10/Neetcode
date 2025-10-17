@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Number OR Non-Cyclical Number</title>
+</head>
+
+<body>
+    <script>
+        function isHappy(n) {
+            const visit = new Set();
+
+            while (!visit.has(n)) {
+                visit.add(n);
+                n = sumOfSquares(n);
+
+                if (n === 1) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        function sumOfSquares(n) {
+            let output = 0;
+
+            while (n > 0) {
+                let digit = n % 10;
+                digit = digit * digit;
+                output += digit;
+                n = Math.floor(n / 10);
+            }
+            return output;
+        }
+    </script>
+</body>
+
+</html>
