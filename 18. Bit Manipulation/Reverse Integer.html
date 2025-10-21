@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse Integer</title>
+</head>
+
+<body>
+    <script>
+        function reverse(x) {
+            const INT_MIN = -Math.pow(2, 31);
+            const INT_MAX = Math.pow(2, 31) - 1;
+
+            let result = 0;
+
+            while (x !== 0) {
+                // Extract the last digit (handle negative numbers properly)
+                let digit = x % 10;
+                // Remove the last digit from x (integer division)
+                x = (x / 10) | 0; // Bitwise OR with 0 to truncate towards zero
+
+                // Check for overflow/underflow before appending digit
+                if (result > Math.floor((INT_MAX - digit) / 10)) {
+                    return 0;
+                }
+                if (result < Math.ceil((INT_MIN - digit) / 10)) {
+                    return 0;
+                }
+
+                result = result * 10 + digit;
+            }
+
+            return result;
+        }
+
+        x = 1234;
+        console.log(reverse(x));
+    </script>
+</body>
+
+</html>
