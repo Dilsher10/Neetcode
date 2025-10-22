@@ -15,10 +15,10 @@
                 return 0;
             }
 
-            let lh = maxDepth(root.left);
-            let rh = maxDepth(root.right);
+            let left = maxDepth(root.left);
+            let right = maxDepth(root.right);
 
-            return (1 + Math.max(lh, rh));
+            return (1 + Math.max(left, right));
         }
 
 
