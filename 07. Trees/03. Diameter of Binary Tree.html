@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diameter of Binary Tree</title>
+</head>
+
+<body>
+    <script>
+        var diameterOfBinaryTree = function (root) {
+            let maxDiameter = 0;
+
+            function dfs(node) {
+                if (node === null) return 0;
+
+                const left = dfs(node.left);
+                const right = dfs(node.right);
+
+                // Update the max diameter at this node
+                maxDiameter = Math.max(maxDiameter, left + right);
+
+                // Return max depth to parent
+                return 1 + Math.max(left, right);
+            }
+
+            dfs(root);
+            return maxDiameter;
+        };
+
+    </script>
+</body>
+
+</html>
