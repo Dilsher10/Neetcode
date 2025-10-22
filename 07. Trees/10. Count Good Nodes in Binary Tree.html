@@ -1,11 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Count Good Nodes in Binary Tree</title>
 </head>
+
 <body>
-    
+    <script>
+        function goodNodes(root) {
+            function dfs(node, maxVal) {
+                if (!node) return 0;
+
+                // Is this node good?
+                let good = node.val >= maxVal ? 1 : 0;
+
+                // Update max for children
+                maxVal = Math.max(maxVal, node.val);
+
+                // Count good nodes in subtrees
+                good += dfs(node.left, maxVal);
+                good += dfs(node.right, maxVal);
+
+                return good;
+            }
+
+            return dfs(root, root.val);
+        };
+    </script>
 </body>
+
 </html>
