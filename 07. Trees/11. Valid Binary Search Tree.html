@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valid Binary Search Tree</title>
+</head>
+
+<body>
+    <script>
+        function isValidBST(root) {
+            const dfs = (node, min, max) => {
+                if (!node) return true;
+
+                // Node value must be within (min, max)
+                if (node.val <= min || node.val >= max) return false;
+
+                // Left subtree: all values < node.val
+                // Right subtree: all values > node.val
+                return dfs(node.left, min, node.val) && dfs(node.right, node.val, max);
+            }
+
+            return dfs(root, -Infinity, Infinity);
+        };
+    </script>
+</body>
+
+</html>
