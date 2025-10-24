@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kth Smallest Integer in BST</title>
 </head>
+
 <body>
     <script>
-        
+        function kthSmallest(root, k) {
+            let stack = [];
+            let curr = root;
+
+            while (stack.length > 0 || curr !== null) {
+                // Step 1: Go as far left as possible (to the smallest values)
+                while (curr !== null) {
+                    stack.push(curr);
+                    curr = curr.left;
+                }
+
+                // Step 2: Process the top node
+                curr = stack.pop();
+                k--;
+
+                // Step 3: When k == 0, we found the kth smallest
+                if (k === 0) {
+                    return curr.val;
+                }
+
+                // Step 4: Move to the right subtree
+                curr = curr.right;
+            }
+        }
     </script>
 </body>
+
 </html>
