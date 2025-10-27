@@ -1,13 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serialize and Deserialize Binary Tree</title>
 </head>
+
 <body>
     <script>
-        
+        class Codec {
+            serialize(root) {
+                const res = [];
+                this.dfsSerialize(root, res);
+                return res.join(',');
+            }
+
+            dfsSerialize(node, res) {
+                if (node === null) {
+                    res.push('N');
+                    return;
+                }
+                res.push(node.val.toString());
+                this.dfsSerialize(node.left, res);
+                this.dfsSerialize(node.right, res);
+            }
+
+          
+            deserialize(data) {
+                const vals = data.split(',');
+                const i = { val: 0 };
+                return this.dfsDeserialize(vals, i);
+            }
+
+            dfsDeserialize(vals, i) {
+                if (vals[i.val] === 'N') {
+                    i.val++;
+                    return null;
+                }
+                const node = new TreeNode(parseInt(vals[i.val]));
+                i.val++;
+                node.left = this.dfsDeserialize(vals, i);
+                node.right = this.dfsDeserialize(vals, i);
+                return node;
+            }
+        }
     </script>
 </body>
+
 </html>
