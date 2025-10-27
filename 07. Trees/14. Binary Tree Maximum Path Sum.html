@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Binary Tree Maximum Path Sum</title>
 </head>
+
 <body>
     <script>
-        
+        class Solution {
+            maxPathSum(root) {
+                const res = [root.val];
+                this.dfs(root, res);
+                return res[0];
+            }
+
+            dfs(root, res) {
+                if (root === null) {
+                    return 0;
+                }
+
+                const leftMax = Math.max(this.dfs(root.left, res), 0);
+                const rightMax = Math.max(this.dfs(root.right, res), 0);
+
+                res[0] = Math.max(res[0], root.val + leftMax + rightMax);
+                return root.val + Math.max(leftMax, rightMax);
+            }
+        }
     </script>
 </body>
+
 </html>
