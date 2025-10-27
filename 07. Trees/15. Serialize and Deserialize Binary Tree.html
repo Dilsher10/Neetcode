@@ -10,38 +10,43 @@
 <body>
     <script>
         class Codec {
+            // Converts a binary tree into a single string.
             serialize(root) {
                 const res = [];
-                this.dfsSerialize(root, res);
+
+                const dfs = (node) => {
+                    if (node === null) {
+                        res.push('N');
+                        return;
+                    }
+                    res.push(node.val.toString());
+                    dfs(node.left);
+                    dfs(node.right);
+                }
+
+                dfs(root);
                 return res.join(',');
             }
 
-            dfsSerialize(node, res) {
-                if (node === null) {
-                    res.push('N');
-                    return;
-                }
-                res.push(node.val.toString());
-                this.dfsSerialize(node.left, res);
-                this.dfsSerialize(node.right, res);
-            }
-          
+
+            // Reconstructs a tree from the serialized string.
             deserialize(data) {
                 const vals = data.split(',');
-                const i = { val: 0 };
-                return this.dfsDeserialize(vals, i);
-            }
+                let index = 0;
 
-            dfsDeserialize(vals, i) {
-                if (vals[i.val] === 'N') {
-                    i.val++;
-                    return null;
+                const dfs = () => {
+                    if (vals[index] === 'N') {
+                        index++;
+                        return null;
+                    }
+                    const node = new TreeNode(parseInt(vals[index]));
+                    index++;
+                    node.left = dfs();
+                    node.right = dfs();
+                    return node;
                 }
-                const node = new TreeNode(parseInt(vals[i.val]));
-                i.val++;
-                node.left = this.dfsDeserialize(vals, i);
-                node.right = this.dfsDeserialize(vals, i);
-                return node;
+
+                return dfs();
             }
         }
     </script>
