@@ -11,16 +11,21 @@
     <script>
         // Efficient Time Complexity O(n) & Space Complexity O(1);
         function rob(nums) {
-            let rob1 = 0;
-            let rob2 = 0;
+            if (nums.length === 0) return 0;
+            if (nums.length === 1) return nums[0];
+            if (nums.length === 2) return Math.max(nums[0], nums[1]);
 
-            for (const num of nums) {
-                const temp = Math.max(num + rob1, rob2);
+            let rob1 = nums[0];
+            let rob2 = Math.max(nums[0], nums[1]);
+            let cur = 0;
+
+            for (let i = 2; i < nums.length; i++) {
+                cur = Math.max(nums[i] + rob1, rob2);
                 rob1 = rob2;
-                rob2 = temp;
+                rob2 = cur;
             }
 
-            return rob2;
+            return cur;
         }
 
 
@@ -41,7 +46,7 @@
         };
 
 
-        const nums = [7, 3, 2, 8, 2, 1, 10];
+        const nums = [2, 9, 8, 3, 6];
         console.log(rob(nums));
     </script>
 </body>
