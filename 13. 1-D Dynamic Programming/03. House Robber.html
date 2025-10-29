@@ -9,6 +9,7 @@
 
 <body>
     <script>
+        // Efficient Time Complexity O(n) & Space Complexity O(1);
         function rob(nums) {
             let rob1 = 0;
             let rob2 = 0;
@@ -23,8 +24,8 @@
         }
 
 
-
-        var rob = function (nums) {
+        // Optimal Time Complexity O(n) & Space Complexity O(n);
+        function rob(nums) {
             if (nums.length === 0) return 0;
             if (nums.length === 1) return nums[0];
 
