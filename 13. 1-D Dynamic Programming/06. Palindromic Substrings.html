@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindromic Substrings</title>
+</head>
+
+<body>
+    <script>
+        function countSubstrings(s) {
+            let res = 0;
+
+            for (let i = 0; i < s.length; i++) {
+                // Odd length
+                let l = i;
+                let r = i;
+                while (l >= 0 && r < s.length && s[l] === s[r]) {
+                    res += 1;
+                    l--;
+                    r++;
+                }
+
+
+                // Even length
+                l = i;
+                r = i + 1;
+                while (l >= 0 && r < s.length && s[l] === s[r]) {
+                    res += 1;
+                    l--;
+                    r++;
+                }
+
+            }
+
+            return res;
+        }
+
+        s = "aaa";
+        console.log(countSubstrings(s));
+    </script>
+</body>
+
+</html>
