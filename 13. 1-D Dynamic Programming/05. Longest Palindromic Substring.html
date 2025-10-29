@@ -1,13 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Longest Palindromic Substring</title>
 </head>
+
 <body>
     <script>
-        
+        // Time complexity O(n^2) & Space complexity O(1)
+        function longestPalindrome(s) {
+            let resIdx = 0;
+            let resLen = 0;
+
+            for (let i = 0; i < s.length; i++) {
+                // odd length
+                let l = i;
+                let r = i;
+                while (l >= 0 && r < s.length && s[l] === s[r]) {
+                    if (r - l + 1 > resLen) {
+                        resIdx = l;
+                        resLen = r - l + 1;
+                    }
+                    l--;
+                    r++;
+                }
+
+                // even length
+                l = i;
+                r = i + 1;
+                while (l >= 0 && r < s.length && s[l] === s[r]) {
+                    if (r - l + 1 > resLen) {
+                        resIdx = l;
+                        resLen = r - l + 1;
+                    }
+                    l--;
+                    r++;
+                }
+            }
+
+            return s.substring(resIdx, resIdx + resLen);
+        }
+
+
+
+
+
+
+        // Time complexity O(n^2) & Space complexity O(n). Space complexity O(n) because of res.
+        function longestPalindrome(s) {
+            let res = "";
+            let resLen = 0;
+
+            for (let i = 0; i < s.length; i++) {
+                // Odd length palindrome
+                let left = i, right = i;
+                while (left >= 0 && right < s.length && s[left] === s[right]) {
+                    if (right - left + 1 > resLen) {
+                        res = s.slice(left, right + 1);
+                        resLen = right - left + 1;
+                    }
+                    left--;
+                    right++;
+                }
+
+                // Even length palindrome
+                left = i;
+                right = i + 1;
+                while (left >= 0 && right < s.length && s[left] === s[right]) {
+                    if (right - left + 1 > resLen) {
+                        res = s.slice(left, right + 1);
+                        resLen = right - left + 1;
+                    }
+                    left--;
+                    right++;
+                }
+            }
+
+            return res;
+        }
+
+
+        const s = "ababd";
+        console.log(longestPalindrome(s));
     </script>
 </body>
+
 </html>
