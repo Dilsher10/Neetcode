@@ -1,13 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Decode Ways</title>
 </head>
+
 <body>
     <script>
-        
+        function numDecodings(s) {
+            if (!s || s[0] === '0') {
+                return 0;
+            }
+
+            const n = s.length;
+            let dp = new Array(n + 1).fill(0);
+
+            // Base case: There's one way to decode an empty string.
+            dp[0] = 1;
+
+            // Base case: If the first character is non-zero, there is one way to decode it.
+            dp[1] = s[0] !== '0' ? 1 : 0;
+
+            for (let i = 2; i <= n; i++) {
+                // Check if the single digit is valid (1-9)
+                if (s[i - 1] >= '1' && s[i - 1] <= '9') {
+                    dp[i] += dp[i - 1];
+                }
+
+                // Check if the two digits form a valid number (10-26)
+                const twoDigits = s.slice(i - 2, i);
+                if (twoDigits >= '10' && twoDigits <= '26') {
+                    dp[i] += dp[i - 2];
+                }
+            }
+
+            return dp[n];
+        };
+
+        console.log(numDecodings("12"));
     </script>
 </body>
+
 </html>
