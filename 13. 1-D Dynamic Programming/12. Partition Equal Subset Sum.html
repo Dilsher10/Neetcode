@@ -10,32 +10,28 @@
 <body>
     <script>
         function canPartition(nums) {
-            // Step 1: Compute total sum of all numbers
-            const total = nums.reduce((a, b) => a + b, 0);
-
-            // Step 2: If total is odd, it can’t be divided equally
-            if (total % 2 !== 0) return false;
-
-            // Step 3: We need to find a subset that sums up to total / 2
-            const target = total / 2;
-
-            // Step 4: Create a DP array where dp[i] means
-            // "Can we make sum i using some subset of nums?"
-            const dp = new Array(target + 1).fill(false);
-            dp[0] = true; // Base case: sum 0 is always possible (empty subset)
-
-            // Step 5: Iterate over each number in nums
-            for (let num of nums) {
-                // Traverse backwards to avoid using the same number twice
-                for (let i = target; i >= num; i--) {
-                    // If we can make (i - num), then we can also make i
-                    dp[i] = dp[i] || dp[i - num];
-                }
+            const sum = nums.reduce((acc, num) => acc + num, 0);
+            if (sum % 2 !== 0) {
+                return false;
             }
 
-            // Step 6: If dp[target] is true, we found a subset that sums to target
-            return dp[target];
-        };
+            let dp = new Set([0]);
+            const target = sum / 2;
+
+            for (let i = nums.length - 1; i >= 0; i--) {
+                const nextDP = new Set(dp);
+                for (const t of dp) {
+                    let curSum = t + nums[i];
+                    if (curSum === target) {
+                        return true;
+                    }
+                    if (curSum < target) nextDP.add(curSum);
+                }
+                dp = nextDP;
+            }
+
+            return false;
+        }
 
 
 
@@ -43,29 +39,23 @@
 
 
         function canPartition(nums) {
-            const sum = nums.reduce((acc, num) => acc + num, 0);
-            if (sum % 2 !== 0) {
-                return false;
-            }
-
-            let dp = new Set();
-            dp.add(0);
+            const sum = nums.reduce((a, b) => a + b, 0);
+            if (sum % 2 !== 0) return false;
             const target = sum / 2;
 
-            for (let i = nums.length - 1; i >= 0; i--) {
-                const nextDP = new Set();
+            let dp = new Set([0]);
+            for (const num of nums) {
+                const next = new Set(dp);
                 for (const t of dp) {
-                    if (t + nums[i] === target) {
-                        return true;
-                    }
-                    nextDP.add(t + nums[i]);
-                    nextDP.add(t);
+                    const newSum = t + num;
+                    if (newSum === target) return true;
+                    if (newSum < target) next.add(newSum);
                 }
-                dp = nextDP;
+                dp = next;
             }
-
-            return false;
+            return dp.has(target);
         }
+
 
         nums = [1, 2, 3, 4];
         console.log(canPartition(nums));
