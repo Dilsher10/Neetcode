@@ -25,7 +25,7 @@
                     if (curSum === target) {
                         return true;
                     }
-                    if (curSum < target) nextDP.add(curSum);
+                    nextDP.add(curSum);
                 }
                 dp = nextDP;
             }
@@ -57,7 +57,7 @@
         }
 
 
-        nums = [1, 2, 3, 4];
+        nums = [1, 5, 11, 5];
         console.log(canPartition(nums));
     </script>
 </body>
