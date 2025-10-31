@@ -10,6 +10,39 @@
 <body>
     <script>
         function canPartition(nums) {
+            // Step 1: Compute total sum of all numbers
+            const total = nums.reduce((a, b) => a + b, 0);
+
+            // Step 2: If total is odd, it can’t be divided equally
+            if (total % 2 !== 0) return false;
+
+            // Step 3: We need to find a subset that sums up to total / 2
+            const target = total / 2;
+
+            // Step 4: Create a DP array where dp[i] means
+            // "Can we make sum i using some subset of nums?"
+            const dp = new Array(target + 1).fill(false);
+            dp[0] = true; // Base case: sum 0 is always possible (empty subset)
+
+            // Step 5: Iterate over each number in nums
+            for (let num of nums) {
+                // Traverse backwards to avoid using the same number twice
+                for (let i = target; i >= num; i--) {
+                    // If we can make (i - num), then we can also make i
+                    dp[i] = dp[i] || dp[i - num];
+                }
+            }
+
+            // Step 6: If dp[target] is true, we found a subset that sums to target
+            return dp[target];
+        };
+
+
+
+
+
+
+        function canPartition(nums) {
             const sum = nums.reduce((acc, num) => acc + num, 0);
             if (sum % 2 !== 0) {
                 return false;
@@ -33,6 +66,9 @@
 
             return false;
         }
+
+        nums = [1, 2, 3, 4];
+        console.log(canPartition(nums));
     </script>
 </body>
 
