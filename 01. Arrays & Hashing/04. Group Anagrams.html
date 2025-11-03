@@ -10,16 +10,13 @@
 <body>
     <script>
         function groupAnagrams(strs) {
-
             const res = {};
 
             for (let s of strs) {
                 const count = new Array(26).fill(0);
 
                 for (let c of s) {
-                    // That line is basically a "find my letter's position in the alphabet" trick.
-                    const index = c.charCodeAt(0) - 'a'.charCodeAt(0);
-                    count[index] += 1;
+                    count[c.charCodeAt(0) - 97]++;
                 }
 
                 const key = count.join(',');
@@ -33,9 +30,6 @@
 
             return Object.values(res);
         }
-
-
-
 
         strs = ["act", "pots", "tops", "cat", "stop", "hat"];
         console.log(groupAnagrams(strs));
