@@ -10,20 +10,21 @@
 <body>
     <script>
         function lengthOfLIS(nums) {
-            const LIS = new Array(nums.length).fill(1);
+            const n = nums.length;
+            const dp = new Array(n).fill(1);
 
-            for (let i = nums.length - 1; i >= 0; i--) {
-                for (let j = i + 1; j < nums.length; j++) {
-                    if (nums[i] < nums[j]) {
-                        LIS[i] = Math.max(LIS[i], 1 + LIS[j]);
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < i; j++) {
+                    if (nums[i] > nums[j]) {
+                        dp[i] = Math.max(dp[i], 1 + dp[j]);
                     }
                 }
             }
 
-            return Math.max(...LIS);
-        }
+            return Math.max(...dp);
+        };
 
-        const nums = [1, 2, 4, 3];
+        const nums = [9, 1, 4, 2, 3, 3, 7];
         console.log(lengthOfLIS(nums));
     </script>
 </body>
