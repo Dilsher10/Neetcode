@@ -10,18 +10,17 @@
 <body>
     <script>
         function canPartition(nums) {
-            const sum = nums.reduce((acc, num) => acc + num, 0);
-            if (sum % 2 !== 0) {
-                return false;
-            }
-
-            let dp = new Set([0]);
+            const sum = nums.reduce((acc, val) => acc + val, 0);
+            if (sum % 2 !== 0) return false;
             const target = sum / 2;
 
-            for (let i = nums.length - 1; i >= 0; i--) {
+            let dp = new Set();
+            dp.add(0);
+
+            for (const num of nums) {
                 const nextDP = new Set(dp);
                 for (const t of dp) {
-                    let curSum = t + nums[i];
+                    const curSum = t + num;
                     if (curSum === target) {
                         return true;
                     }
@@ -33,31 +32,7 @@
             return false;
         }
 
-
-
-
-
-
-        function canPartition(nums) {
-            const sum = nums.reduce((a, b) => a + b, 0);
-            if (sum % 2 !== 0) return false;
-            const target = sum / 2;
-
-            let dp = new Set([0]);
-            for (const num of nums) {
-                const next = new Set(dp);
-                for (const t of dp) {
-                    const newSum = t + num;
-                    if (newSum === target) return true;
-                    if (newSum < target) next.add(newSum);
-                }
-                dp = next;
-            }
-            return dp.has(target);
-        }
-
-
-        nums = [1, 5, 11, 5];
+        const nums = [1, 2, 3, 4];
         console.log(canPartition(nums));
     </script>
 </body>

@@ -10,40 +10,15 @@
 <body>
     <script>
         function wordBreak(s, wordDict) {
-            const dp = new Array(s.length + 1).fill(false);
-            dp[s.length] = true;
-
-            for (let i = s.length - 1; i >= 0; i--) {
-                for (const w of wordDict) {
-                    if (i + w.length <= s.length && s.slice(i, i + w.length) === w) {
-                        dp[i] = dp[i + w.length];
-                    }
-                    if (dp[i]) {
-                        break;
-                    }
-                }
-            }
-
-            return dp[0];
-        }
-
-
-
-
-
-        function wordBreak(s, wordDict) {
-            // Convert wordDict to a set for O(1) lookups
             const wordSet = new Set(wordDict);
-
-            // Create a DP array with n+1 elements, initialized to false
             const n = s.length;
             const dp = new Array(n + 1).fill(false);
-            dp[0] = true;  // Base case: empty string can be segmented
+            dp[0] = true;
 
-            // Iterate through each position in the string
             for (let i = 1; i <= n; i++) {
                 for (let j = 0; j < i; j++) {
-                    if (dp[j] && wordSet.has(s.substring(j, i))) {
+                    const word = s.substring(j, i);
+                    if (dp[j] && wordSet.has(word)) {
                         dp[i] = true;
                         break;
                     }
@@ -53,10 +28,8 @@
             return dp[n];
         };
 
-        // Example usage:
-        const s = "leetcode";
-        const wordDict = ["leet", "code"];
-        console.log(wordBreak(s, wordDict));  // Output: true
+        s = "neetcode", wordDict = ["neet", "code"];
+        console.log(wordBreak(s, wordDict));
     </script>
 </body>
 
