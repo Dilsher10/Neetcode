@@ -10,23 +10,17 @@
 <body>
     <script>
         function lowestCommonAncestor(root, p, q) {
-            let current = root;
-
-            while (current) {
-                if (p.val < current.val && q.val < current.val) {
-                    // Both nodes are in the left subtree
-                    current = current.left;
-                } else if (p.val > current.val && q.val > current.val) {
-                    // Both nodes are in the right subtree
-                    current = current.right;
+            while (root) {
+                if (p.val < root.val && q.val < root.val) {
+                    root = root.left;
+                } else if (p.val > root.val && q.val > root.val) {
+                    root = root.right;
                 } else {
-                    // We found the split point
-                    return current;
+                    return root;
                 }
             }
-
             return null;
-        };
+        }
     </script>
 </body>
 
