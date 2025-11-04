@@ -10,6 +10,30 @@
 <body>
     <script>
         function isValidBST(root) {
+            let stack = [];
+            let prev = -Infinity;
+            let node = root;
+
+            while (stack.length > 0 || node !== null) {
+                // Go as left as possible
+                while (node !== null) {
+                    stack.push(node);
+                    node = node.left;
+                }
+
+                node = stack.pop();
+                if (node.val <= prev) return false;
+                prev = node.val;
+                node = node.right;
+            }
+
+            return true;
+        };
+
+
+
+
+        function isValidBST(root) {
             const dfs = (node, min, max) => {
                 if (!node) return true;
 

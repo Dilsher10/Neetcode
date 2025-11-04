@@ -10,7 +10,7 @@
 <body>
     <script>
         function goodNodes(root) {
-            function dfs(node, maxVal) {
+            const dfs = (node, maxVal) => {
                 if (!node) return 0;
 
                 // Is this node good?
