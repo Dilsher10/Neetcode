@@ -10,14 +10,15 @@
 <body>
     <script>
         function isSameTree(p, q) {
-            // Both nodes are null
-            if (!p && !q) return true;
+            if (!p && !q) {
+                return true;
+            }
 
-            // One is null or values don't match
-            if (!p || !q || p.val !== q.val) return false;
-
-            // Recursively check left and right subtrees
-            return (isSameTree(p.left, q.left) && isSameTree(p.right, q.right));
+            if (p && q && p.val === q.val) {
+                return (isSameTree(p.left, q.left) && isSameTree(p.right, q.right));
+            } else {
+                return false;
+            }
         }
     </script>
 </body>
