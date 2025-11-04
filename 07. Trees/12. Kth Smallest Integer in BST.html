@@ -11,26 +11,26 @@
     <script>
         function kthSmallest(root, k) {
             let stack = [];
-            let curr = root;
+            let node = root;
 
-            while (stack.length > 0 || curr !== null) {
+            while (stack.length > 0 || node !== null) {
                 // Step 1: Go as far left as possible (to the smallest values)
-                while (curr !== null) {
-                    stack.push(curr);
-                    curr = curr.left;
+                while (node !== null) {
+                    stack.push(node);
+                    node = node.left;
                 }
 
                 // Step 2: Process the top node
-                curr = stack.pop();
+                node = stack.pop();
                 k--;
 
                 // Step 3: When k == 0, we found the kth smallest
                 if (k === 0) {
-                    return curr.val;
+                    return node.val;
                 }
 
                 // Step 4: Move to the right subtree
-                curr = curr.right;
+                node = node.right;
             }
         }
     </script>
