@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Longest Subarray Sum Equals K</title>
+</head>
+
+<body>
+    <script>
+        function longestSubarraySumK(nums, k) {
+            const sumMap = new Map();
+            sumMap.set(0, -1); // handle subarrays starting at index 0
+            let currentSum = 0;
+            let maxLength = 0;
+
+            for (let i = 0; i < nums.length; i++) {
+                currentSum += nums[i];
+
+                // If (currentSum - k) exists, there is a subarray summing to k
+                if (sumMap.has(currentSum - k)) {
+                    maxLength = Math.max(maxLength, i - sumMap.get(currentSum - k));
+                }
+
+                // Store the first occurrence of currentSum
+                if (!sumMap.has(currentSum)) {
+                    sumMap.set(currentSum, i);
+                }
+            }
+
+            return maxLength;
+        }
+
+        const nums = [1, -1, 5, -2, 3];
+        const k = 3;
+        console.log(longestSubarraySumK(nums, k)); // Output: 4
+    </script>
+</body>
+
+</html>
