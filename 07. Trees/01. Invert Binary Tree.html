@@ -11,13 +11,19 @@
     <script>
         // Method 1: Depth First Search
         function invertTree(root) {
+            // Base case: if the node is null, return null
             if (!root) return null;
 
-            [root.left, root.right] = [root.right, root.left];
+            // Swap the left and right children
+            const temp = root.left;
+            root.left = root.right;
+            root.right = temp;
 
+            // Recursively invert left and right subtrees
             invertTree(root.left);
             invertTree(root.right);
 
+            // Return the root of the inverted tree
             return root;
         }
 
