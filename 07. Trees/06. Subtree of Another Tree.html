@@ -14,24 +14,29 @@
                 if (!subRoot) {
                     return true;
                 }
+
                 if (!root) {
                     return false;
                 }
+
                 if (this.sameTree(root, subRoot)) {
                     return true;
                 }
+
                 return (this.isSubtree(root.left, subRoot) || this.isSubtree(root.right, subRoot));
             }
 
 
-            sameTree(root, subRoot) {
-                if (!root && !subRoot) {
+            sameTree(p, q) {
+                if (!p && !q) {
                     return true;
                 }
-                if (!root || !subRoot || root.val !== subRoot.val) {
-                    return false;
+
+                if (p && q && p.val === q.val) {
+                    return (this.sameTree(p.left, q.left) && this.sameTree(p.right, q.right));
                 }
-                return (this.sameTree(root.left, subRoot.left) && this.sameTree(root.right, subRoot.right));
+
+                return false;
             }
         }
     </script>
