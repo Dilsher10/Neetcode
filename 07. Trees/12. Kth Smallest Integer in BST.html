@@ -14,7 +14,7 @@
             let node = root;
 
             while (stack.length > 0 || node !== null) {
-                // Step 1: Go as far left as possible (to the smallest values)
+                // Step 1: Go as far left as possible
                 while (node !== null) {
                     stack.push(node);
                     node = node.left;
