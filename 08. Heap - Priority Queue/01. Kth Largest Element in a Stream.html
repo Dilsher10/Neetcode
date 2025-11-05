@@ -16,10 +16,9 @@
 
                 for (const num of nums) {
                     this.minHeap.enqueue(num);
-                }
-
-                while (this.minHeap.size() > k) {
-                    this.minHeap.dequeue();
+                    if (this.minHeap.size() > k) {
+                        this.minHeap.dequeue();
+                    }
                 }
             }
 
