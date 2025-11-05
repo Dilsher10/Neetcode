@@ -9,25 +9,29 @@
 
 <body>
     <script>
-        class Solution {
-            maxPathSum(root) {
-                const res = [root.val];
-                this.dfs(root, res);
-                return res[0];
+        function maxPathSum(root) {
+            let maxSum = -Infinity;
+
+            const dfs = (node) => {
+                if (!node) return 0;
+                
+                // Recursively find the maximum gain from left and right subtrees
+                const left = Math.max(dfs(node.left), 0);
+                const right = Math.max(dfs(node.right), 0);
+
+                // Price of a new path passing through this node
+                const curSum = node.val + left + right;
+
+                // Update the global maximum path sum if needed
+                maxSum = Math.max(maxSum, curSum);
+
+                // For recursion: return max sum starting from this node
+                return node.val + Math.max(left, right);
             }
 
-            dfs(root, res) {
-                if (root === null) {
-                    return 0;
-                }
-
-                const leftMax = Math.max(this.dfs(root.left, res), 0);
-                const rightMax = Math.max(this.dfs(root.right, res), 0);
-
-                res[0] = Math.max(res[0], root.val + leftMax + rightMax);
-                return root.val + Math.max(leftMax, rightMax);
-            }
-        }
+            dfs(root);
+            return maxSum;
+        };
     </script>
 </body>
 
