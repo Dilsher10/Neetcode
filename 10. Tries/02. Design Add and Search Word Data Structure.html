@@ -25,22 +25,17 @@
             addWord(word) {
                 let cur = this.root;
                 for (const c of word) {
-                    // If character doesn't exist as a child, create a new TrieNode
                     if (!cur.children.has(c)) {
                         cur.children.set(c, new TrieNode());
                     }
-
-                    // Move to the next node
                     cur = cur.children.get(c);
                 }
-
-                // Mark the end node as a complete word
                 cur.word = true;
             }
 
 
             search(word) {
-                return this.dfs(word, 0, this.root);  // Start DFS from index 0 and root node
+                return this.dfs(word, 0, this.root);
             }
 
 
