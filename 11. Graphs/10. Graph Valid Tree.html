@@ -30,7 +30,7 @@
 
             const visited = new Set();
 
-            const dfs = (node, prev) => {
+            const dfs = (node, parent) => {
                 if (visited.has(node)) {
                     return false;
                 }
@@ -38,7 +38,7 @@
                 visited.add(node);
 
                 for (let neighbor of graph.get(node)) {
-                    if (neighbor === prev) continue;
+                    if (neighbor === prarent) continue;   // skip edge back to parent
                     if (!dfs(neighbor, node)) return false;
                 }
 
