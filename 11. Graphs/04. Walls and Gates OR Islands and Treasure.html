@@ -30,11 +30,7 @@
             function bfs(r, c) {
                 const key = `${r},${c}`;
 
-                if (
-                    r < 0 || c < 0 ||
-                    r >= ROWS || c >= COLS ||
-                    grid[r][c] === -1 || visit.has(key)
-                ) {
+                if (r < 0 || c < 0 || r >= ROWS || c >= COLS || grid[r][c] === -1 || visit.has(key)) {
                     return;
                 }
 
