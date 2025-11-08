@@ -10,54 +10,48 @@
 <body>
     <script>
         function findRedundantConnection(edges) {
-            // Initialize parent array: each node is its own parent initially
-            const par = new Array(edges.length + 1).fill(0).map((_, i) => i);
-
-            // Initialize rank array to keep track of tree sizes (used for union by rank)
+            const parent = new Array(edges.length + 1).fill(0).map((_, i) => i);
             const rank = new Array(edges.length + 1).fill(1);
 
-            // Helper function to find the root of a node with path compression
+
             const find = (n) => {
-                let p = par[n];
-                // Traverse up the tree until reaching the root
-                while (p !== par[p]) {
-                    // Path compression: make each node point to its grandparent
-                    par[p] = par[par[p]];
-                    p = par[p];
+                while (n !== parent[n]) {
+                    parent[n] = parent[parent[n]];
+                    n = parent[n];
                 }
-                return p;
+                return n;
             };
 
-            // Helper function to union two sets
-            const union = (n1, n2) => {
-                const p1 = find(n1); // Find root of n1
-                const p2 = find(n2); // Find root of n2
+
+            const union = (u, v) => {
+                const rootU = find(u);
+                const rootV = find(v);
 
                 // If both nodes have the same root, a cycle is detected
-                if (p1 === p2) {
+                if (rootU === rootV) {
                     return false;
                 }
 
                 // Union by rank: attach smaller tree under larger tree
-                if (rank[p1] > rank[p2]) {
-                    par[p2] = p1;
-                    rank[p1] += rank[p2];
+                if (rank[rootU] > rank[rootV]) {
+                    parent[rootV] = rootU;
+                    rank[rootU] += rank[rootV];
                 } else {
-                    par[p1] = p2;
-                    rank[p2] += rank[p1];
+                    parent[rootU] = rootV;
+                    rank[rootV] += rank[rootU];
                 }
+                
                 return true;
             };
 
-            // Iterate through each edge
-            for (const [n1, n2] of edges) {
+
+            for (const [u, v] of edges) {
                 // If union returns false, it means adding this edge would create a cycle
-                if (!union(n1, n2)) {
-                    return [n1, n2]; // This is the redundant connection
+                if (!union(u, v)) {
+                    return [u, v];
                 }
             }
 
-            // Fallback, in theory we should always return within the loop
             return [];
         }
 
