@@ -10,21 +10,37 @@
 <body>
     <script>
         function myPow(x, n) {
-            if (x === 0) {
-                return 0;
+            // Base case: any number raised to the power of 0 is 1
+            if (n === 0) return 1;
+
+            // Store n in a new variable so we can modify it safely
+            let N = n;
+
+            // If the exponent is negative, invert the base and make the exponent positive
+            if (N < 0) {
+                x = 1 / x;
+                N = -N;
             }
 
-            if (n === 0) {
-                return 1;
+            // Initialize the result as 1 (since anything multiplied by 1 stays the same)
+            let result = 1;
+
+            // Use fast exponentiation (exponentiation by squaring)
+            while (N > 0) {
+                // If N is odd, multiply the result by the current base
+                if (N % 2 === 1) {
+                    result *= x;
+                }
+
+                // Square the base for the next iteration
+                x *= x;
+
+                // Divide N by 2 (integer division)
+                N = Math.floor(N / 2);
             }
 
-            let res = 1;
-
-            for (let i = 0; i < Math.abs(n); i++) {
-                res *= x;
-            }
-
-            return n >= 0 ? res : 1 / res;
+            // Return the final computed power
+            return result;
         }
 
         x = 2.00000, n = -3
